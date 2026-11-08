@@ -8,7 +8,7 @@ No necesitas programar para seguir la explicación de [la web](index.html). All�
 
 Ilustración conceptual generada con IA; no es una captura de la demo.
 
-Nuestra [demo Taller](demo/README.md) implementa la idea con un datapack y un paquete de recursos para Minecraft Java 26.3. Puedes instalarla en vanilla y usar sus archivos como base. [Descargar proyecto](downloads/minecraft-ui-demo.zip).
+Nuestra [demo Taller](demo/README.md) implementa la idea con un datapack y un paquete de recursos para Minecraft Java 26.3. Puedes instalarla en vanilla y usar sus archivos como base. [Instalar en tu servidor](demo/INSTALACION.md) o [descargar las fuentes](downloads/minecraft-ui-demo.zip).
 
 
 ## 1. Qué permite construir la idea
@@ -27,7 +27,7 @@ En una partida individual las funciones también se ejecutan en el servidor inte
 
 ## 3. Versión de referencia
 
-La demo está fijada a Minecraft Java **26.3**, datapack **121.0** y recursos **97.1**. El servidor oficial requiere Java 25. Las versiones y el origen verificable de su JAR están en [versions.json](demo/versions.json).
+La demo está fijada a Minecraft Java **26.3**, datapack **121.0** y recursos **97.1**. Las versiones y el origen verificable de su JAR están en [versions.json](demo/versions.json).
 
 Los formatos cambian entre versiones. No presentar este shader como compatible con cualquier cliente. [Notas oficiales de 26.3](https://www.minecraft.net/en-us/article/minecraft-java-edition-26-3).
 
@@ -44,16 +44,18 @@ demo/
     function/test/     autopruebas nativas
     dialog/            pantallas registradas
   pack/assets/         fuentes, texturas y shader
-  tools/               generación, comprobación y arranque
+  tools/               generación y comprobación para desarrollo
 ```
 
 No hay un plugin ni una API de servidor externa. Los [archivos del proyecto](demo/README.md) son el punto de partida para implementar.
 
 ## 5. Cargar el paquete de recursos
 
-El cliente debe cargar las imágenes y las fuentes para dibujar el aspecto previsto. En un mundo individual, instala y activa [taller-resources.zip](downloads/taller-resources.zip). El servidor local preparado por [dev.py](demo/tools/dev.py) sirve ese ZIP y lo requiere al conectar.
+El cliente debe cargar las imágenes y las fuentes para dibujar la interfaz. La [instalación para un servidor existente](demo/INSTALACION.md) incluye una URL de recursos ya alojada en la guía y su SHA-1. Se configura en `server.properties`; los jugadores aceptan el paquete al conectar.
 
-El datapack no detecta por sí solo el estado de la descarga. El servidor de Minecraft no se incluye en el descargable; se obtiene desde Mojang y se verifica su hash.
+No hace falta añadir un servicio HTTP al servidor. Si ya distribuyes recursos propios, incorpora los archivos de Taller en ese paquete y actualiza su SHA-1, conservando su URL. En un mundo individual, puedes activar [taller-resources.zip](downloads/taller-resources.zip) desde el cliente.
+
+El [paquete de instalación](downloads/taller-instalacion.zip) trae ambos ZIP y el fragmento de configuración. Las [herramientas para desarrollar](demo/DESARROLLO.md) se mantienen aparte.
 
 ## 6. Imágenes que se comportan como letras
 
@@ -183,7 +185,7 @@ El ciclo por jugador atiende solicitudes y temporizadores. El HUD se recompone a
 
 ## 26. Partir del proyecto base
 
-1. Instala el datapack y los recursos en un mundo de pruebas de 26.3.
+1. Instala los ZIP preparados en tu servidor 26.3 siguiendo [estos cuatro pasos](demo/INSTALACION.md).
 2. Abre `/trigger taller.open` sin OP y recorre las acciones.
 3. Cambia una regla en `logic/` y comprueba su efecto.
 4. Modifica una textura o una fuente y revisa las métricas del HUD.
@@ -210,7 +212,7 @@ Validar JSON y comandos con el código del juego comprueba sus formatos, no la e
 - **Faltan dibujos:** comprobar que el paquete de recursos está activo y es el de la misma versión.
 - **No cobra:** comprobar objetivo, progreso y marca de cobro; no modificar solo la etiqueta.
 - **El anclaje falla:** volver al modo centrado y revisar versión, escala y shader.
-- **Cambios sin actualizar:** ejecutar `python demo/tools/build.py` y recargar el datapack o reiniciar el mundo de pruebas.
+- **Cambios sin actualizar:** instalar la nueva versión del ZIP del datapack y reiniciar el servidor. Si has editado las fuentes, consulta [DESARROLLO.md](demo/DESARROLLO.md) para regenerarlo.
 
 No publicar registros con datos de jugadores. No utilizar mundos importantes para las primeras pruebas.
 

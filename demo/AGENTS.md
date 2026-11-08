@@ -1,5 +1,7 @@
 # Demo vanilla de interfaces
 
+La instalación para servidores existentes está en `INSTALACION.md`: no requiere Python ni arrancar otro servidor. `DESARROLLO.md` separa las herramientas para modificar el proyecto.
+
 Minecraft Java 26.3. Solo datapack y recursos; no reintroducir plugins ni APIs de Paper.
 
 - Reglas: `datapack/data/taller/function/logic/`.

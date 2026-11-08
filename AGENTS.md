@@ -4,6 +4,8 @@
 
 La web es primero divulgativa: cualquier persona interesada debe entender la idea sin programar ni abrir los desplegables. Los detalles técnicos, comandos y referencias de archivos van en desplegables junto a cada concepto. No convertir la portada en un tutorial de instalación.
 
+La instalación principal se dirige a quien ya tiene un servidor: ZIP de datapack, recursos y configuración preparada. No exigir Python, un servidor nuevo ni compilar para instalar. Las herramientas de desarrollo van en `demo/DESARROLLO.md`.
+
 La implementación de referencia es Minecraft Java vanilla: datapack y paquete de recursos. No reintroducir Paper ni un plugin. La demo es un ejemplo concreto; no presentar ampliaciones todavía inexistentes como funciones implementadas.
 
 ## Fuentes y comandos
@@ -14,7 +16,7 @@ La implementación de referencia es Minecraft Java vanilla: datapack y paquete d
 - `python tools/check.py` comprueba enlaces, anclas y sincronización.
 - Demo: [demo/README.md](demo/README.md) y [demo/AGENTS.md](demo/AGENTS.md).
 - `python demo/tools/build.py` genera formularios y paquetes; `python demo/tools/check_pack.py` verifica sus recursos.
-- `python tools/package_demo.py` prepara el proyecto descargable. No incluir mundos, datos de jugadores, cachés ni el JAR de Mojang.
+- `python tools/package_demo.py` prepara la instalación, su documentación con hash real y el proyecto fuente descargable. La plantilla de instalación está en `demo/install/INSTALACION.template.md`. No incluir mundos, datos de jugadores, cachés ni el JAR de Mojang.
 
 ## Mapa de la implementación
 

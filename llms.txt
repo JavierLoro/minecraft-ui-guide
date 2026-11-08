@@ -8,3 +8,6 @@ La web explica la idea para cualquier lector. Los desplegables amplían cada con
 - [Demo vanilla](demo/README.md)
 - [Mapa de la demo](demo/AGENTS.md)
 - [Capturas y prueba en cliente](demo/CAPTURAS.md)
+
+- [Instalación en un servidor existente](demo/INSTALACION.md)
+- [Desarrollo y pruebas aisladas](demo/DESARROLLO.md)

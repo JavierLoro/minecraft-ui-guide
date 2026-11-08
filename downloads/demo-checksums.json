@@ -1,13 +1,26 @@
 {
+  "taller-instalacion.zip": {
+    "sha1": "cdcd82e6a08bcbf5493cd779f40b1935b93aa30b",
+    "sha256": "a31af5bad50fba24657015a4af4b85763d5016fa38ae0829483eb90002b9c229",
+    "bytes": 21565
+  },
   "minecraft-ui-demo.zip": {
-    "sha256": "c7fa70a5108c392a566a64b4dda1868be15b677ffd06366bb777375c73a02729",
-    "bytes": 82920
+    "sha1": "65af2ee4ed6a24e5797601c3271443a10a3c73f4",
+    "sha256": "be7645403853689b8ca206182929b56c286eaa72270f6520d2fc088fd7621be1",
+    "bytes": 86005
   },
   "taller-datapack.zip": {
+    "sha1": "692b2e104c44e02fe376472dd9ea222f011d860c",
     "sha256": "f2867af16f867c3f217f98cade16b2c777039a9c08cae08270ef5adb3b149ce1",
     "bytes": 41275
   },
   "taller-resources.zip": {
+    "sha1": "ff50e6aab27de7dea1c2126644563683f384c991",
+    "sha256": "ccd33241bd62fb4da86263464e35109bd8d28f90344c61728c7ca2edc7c3301f",
+    "bytes": 6551
+  },
+  "packs/ff50e6aab27de7dea1c2126644563683f384c991.zip": {
+    "sha1": "ff50e6aab27de7dea1c2126644563683f384c991",
     "sha256": "ccd33241bd62fb4da86263464e35109bd8d28f90344c61728c7ca2edc7c3301f",
     "bytes": 6551
   }

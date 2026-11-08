@@ -4,7 +4,8 @@ Guía divulgativa para entender cómo se combinan las reglas de la partida, las 
 
 - [Leer la guía](https://javierloro.github.io/minecraft-ui-guide/).
 - [Demo Taller: datapack y recursos](demo/README.md).
-- [Descargar proyecto reutilizable](downloads/minecraft-ui-demo.zip).
+- [Instalar en un servidor existente](demo/INSTALACION.md) y [descargar instalación](downloads/taller-instalacion.zip).
+- [Fuentes del proyecto](downloads/minecraft-ui-demo.zip).
 - [Manual técnico en Markdown](GUIA-INTERFACES-MINECRAFT.md).
 - [Entrada para agentes](AGENTS.md).
 
@@ -14,11 +15,12 @@ El relato principal está en `source/template.html`. El manual técnico está en
 
 ```sh
 python -m pip install -r requirements.txt
+python tools/package_demo.py
 python tools/build.py
 python tools/check.py
 ```
 
-## Preparar la demo
+## Desarrollar la demo
 
 ```sh
 python demo/tools/make_assets.py
@@ -27,7 +29,7 @@ python demo/tools/check_pack.py
 python tools/package_demo.py
 ```
 
-La demo usa Minecraft Java 26.3 y sus mecanismos vanilla. No contiene plugins ni el servidor de Mojang. Ver [instrucciones y alcance](demo/README.md) antes de arrancarla.
+La instalación de la funcionalidad utiliza los ZIP ya preparados y el servidor existente. Las herramientas anteriores son para desarrollo; ver [DESARROLLO.md](demo/DESARROLLO.md).
 
 ## Publicar
 

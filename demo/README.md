@@ -1,34 +1,15 @@
-# Taller: demo de interfaces en Minecraft vanilla
+# Taller para tu servidor vanilla
 
-Datapack y paquete de recursos para **Minecraft Java 26.3**. Los menús, las acciones, el progreso y las preferencias se ejecutan con funciones y comandos del juego. No utiliza Paper, plugins, mods ni compilación Java.
+Añade menús, pedidos, ajustes y HUD a un servidor existente de **Minecraft Java 26.3**. La instalación utiliza un datapack y un paquete de recursos ya preparados.
 
-## Probar en un mundo individual
+**[Descargar instalación](https://javierloro.github.io/minecraft-ui-guide/downloads/taller-instalacion.zip)** · **[Pasos de instalación](INSTALACION.md)**
 
-1. Descarga [el datapack](https://javierloro.github.io/minecraft-ui-guide/downloads/taller-datapack.zip) y [los recursos](https://javierloro.github.io/minecraft-ui-guide/downloads/taller-resources.zip).
-2. Al crear un mundo de Minecraft Java 26.3, añade el datapack en la pantalla de paquetes de datos. También puedes colocarlo en `datapacks/` de un mundo de pruebas y recargar ese mundo.
-3. Instala y activa el ZIP de recursos desde Opciones → Paquetes de recursos.
-4. Dentro del mundo, escribe `/trigger taller.open` o abre Taller desde los diálogos del menú de pausa.
+1. Copia el ZIP del datapack a `<tu-mundo>/datapacks/`.
+2. Añade a `server.properties` las dos líneas de recursos incluidas en el descargable.
+3. Reinicia el servidor con tu procedimiento habitual.
+4. Entra, acepta los recursos y escribe `/trigger taller.open`.
 
-Un jugador normal puede usar los botones: solo ejecutan `/trigger`. La instalación y la recarga de un datapack en un servidor corresponden a su administrador.
-
-## Servidor vanilla local
-
-Necesitas Java 25 y Python 3.10+. Desde esta carpeta:
-
-```sh
-python tools/build.py
-python tools/dev.py prepare
-```
-
-El script descarga el servidor **oficial y sin modificar** desde Mojang y verifica su SHA-1. No se redistribuye el servidor. Tras leer y aceptar personalmente la [EULA de Minecraft](https://www.minecraft.net/eula):
-
-```sh
-python tools/dev.py start --accept-eula
-```
-
-Usa `JAVA_HOME` o añade `--java-home RUTA_AL_JDK_25`. La partida escucha en `127.0.0.1:25585`; el lanzador sirve únicamente el ZIP de recursos en `127.0.0.1:8127/pack.zip`. Entra con Minecraft 26.3 y acepta el paquete requerido. Para detenerlo, escribe `stop` en su consola.
-
-`run-vanilla/` es un mundo de desarrollo aislado. No se utilizan mundos existentes ni archivos de otras instancias.
+Si ya distribuyes un paquete propio, integra los recursos en él, conserva su URL y actualiza el SHA-1 del ZIP combinado. La instalación usa el servidor que ya tienes: no hay que ejecutar scripts ni compilar.
 
 ## Recorrido de la demo
 
@@ -60,29 +41,16 @@ Cada jugador tiene un identificador y una bossbar propia. El almacenamiento `tal
 
 La demo no registra un manejador para `minecraft:custom`: esa acción no ejecuta funciones de datapack por sí sola. Utiliza los comandos `/trigger` que sí pueden usar jugadores sin OP.
 
-## Construir y comprobar
+## Modificar el proyecto
 
-```sh
-python tools/make_assets.py
-python tools/build.py
-python tools/check_pack.py
-```
+El [proyecto fuente](https://javierloro.github.io/minecraft-ui-guide/downloads/minecraft-ui-demo.zip) incluye los archivos editables y las herramientas de desarrollo. Consulta [DESARROLLO.md](DESARROLLO.md) para regenerar recursos o levantar un mundo de pruebas aislado.
 
-Para ejecutar las autopruebas en el servidor vanilla preparado, usa su consola:
-
-```mcfunction
-function taller:test/run
-data get storage taller:test report
-```
-
-El informe debe mostrar `errors: 0`. Estas pruebas ejecutan las funciones de pedidos y ajustes con perfiles ficticios propios de la prueba, no con datos de jugadores reales. Los comandos y JSON se validan además contra el parser y los codecs del JAR oficial de Minecraft 26.3 durante el desarrollo.
-
-La comprobación visual y las [capturas del cliente](CAPTURAS.md) son una etapa distinta. No afirmar que un shader se ve bien porque el datapack se haya cargado o las pruebas de comandos pasen.
+La comprobación visual y las [capturas del cliente](CAPTURAS.md) siguen siendo una etapa distinta de la validación de formatos.
 
 ## Alcance
 
 Esta base implementa pedidos, botones, tooltips, tres controles, preferencias y HUD. Mascotas, transiciones complejas y un campo de nombre libre no están implementados. Un shader mueve el dibujo, no crea zonas clicables nuevas.
 
-Los gráficos del paquete deben estar cargados; el datapack no detecta por sí solo el resultado de esa descarga. El arranque local los requiere. Los sprites transparentes afectan también a otras bossbars blancas de estilo continuo.
+Los gráficos del paquete deben estar cargados; el datapack no detecta por sí solo el resultado de esa descarga. Los jugadores deben aceptar el paquete configurado por el servidor. Los sprites transparentes afectan también a otras bossbars blancas de estilo continuo.
 
 Cambia el namespace `taller`, los objetivos y el contrato de fuentes y shader al adaptarlo a otro proyecto. [Entrada para agentes](AGENTS.md), [guía divulgativa](https://javierloro.github.io/minecraft-ui-guide/) y [atribuciones](NOTICE).

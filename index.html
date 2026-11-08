@@ -46,7 +46,24 @@
 <details class="technical"><summary>Ver preferencias, formularios y pruebas</summary><div class="technical-body"><p>Los scoreboards guardan los datos por jugador. Ajustes combina checkbox, selector y deslizador; el formulario envía un entero acotado por <code>/trigger</code>. El datapack valida cada campo antes de aplicarlo.</p><ul class="source-links"><li><a href="demo/tools/build.py">build.py</a>: genera los formularios registrados.</li><li><a href="demo/datapack/data/taller/function/input/form.mcfunction">input/form.mcfunction</a>: recibe una respuesta dentro del modo de ajustes.</li><li><a href="demo/datapack/data/taller/function/logic/settings.mcfunction">logic/settings.mcfunction</a>: valida objetivo y banderas.</li><li><a href="demo/datapack/data/taller/function/player/rejoin.mcfunction">player/rejoin.mcfunction</a>: renueva la sesión al volver.</li><li><a href="demo/datapack/data/taller/function/test/run.mcfunction">test/run.mcfunction</a>: prueba las reglas con perfiles ficticios.</li></ul><p>Las pruebas de comandos y formatos no demuestran el renderizado. El <a href="demo/CAPTURAS.md">recorrido del cliente</a> comprueba esa parte.</p></div></details>
 </section>
 <section class="section" id="demo"><h2>La idea llevada a un taller</h2><p>En nuestro ejemplo, fabricas piezas para completar un pedido. Al terminar puedes cobrarlo y empezar otro. Un panel acompaña el progreso y los ajustes permiten cambiar su visibilidad, posición y tamaño del pedido.</p><p>La demo está hecha para Minecraft vanilla: reúne un datapack con las reglas y un paquete de recursos con su aspecto. Sus archivos sirven de base para desarrollar otro proyecto.</p>
-<details class="technical"><summary>Instalar la demo o partir de su código</summary><div class="technical-body"><div class="controls"><a class="chip" href="downloads/taller-datapack.zip" download>Datapack</a><a class="chip" href="downloads/taller-resources.zip" download>Recursos</a><a class="chip" href="downloads/minecraft-ui-demo.zip" download>Proyecto completo</a></div><p>Usa Minecraft Java 26.3. Instala el datapack en un mundo de pruebas y activa sus recursos; abre <code>/trigger taller.open</code>. En el servidor local, el lanzador prepara el JAR oficial y verifica su origen. Consulta las instrucciones antes de aceptar su EULA.</p><ul class="source-links"><li><a href="https://github.com/JavierLoro/minecraft-ui-guide/tree/main/demo">Código e instrucciones del proyecto</a>.</li><li><a href="demo/README.md">README de la demo</a> y <a href="demo/AGENTS.md">mapa para agentes</a>.</li><li><a href="demo/versions.json">Versiones fijadas</a> y <a href="demo/CAPTURAS.md">pruebas y capturas reales</a>.</li></ul></div></details>
+<details class="technical" id="instalacion"><summary>Instalar en un servidor existente</summary><div class="technical-body"><p>Para un servidor <strong>Minecraft Java 26.3</strong> que ya está funcionando.</p>
+<p><a href="https://javierloro.github.io/minecraft-ui-guide/downloads/taller-instalacion.zip">Descargar el paquete de instalación</a>. Contiene los dos ZIP y un fragmento de configuración; no incluye un servidor nuevo.</p>
+<ol>
+<li><strong>Copia el datapack.</strong> Coloca <code>taller-datapack.zip</code>, sin descomprimir, en <code>&lt;tu-mundo&gt;/datapacks/</code> del servidor.</li>
+<li><strong>Configura los recursos.</strong> Si tu servidor aún no distribuye un paquete propio, añade estas líneas a su <code>server.properties</code>:</li>
+</ol>
+<pre><code class="language-properties">resource-pack=https://javierloro.github.io/minecraft-ui-guide/downloads/packs/ff50e6aab27de7dea1c2126644563683f384c991.zip
+resource-pack-sha1=ff50e6aab27de7dea1c2126644563683f384c991
+</code></pre>
+<ol start="3">
+<li><strong>Reinicia el servidor</strong> con tu procedimiento habitual para cargar el datapack y la configuración.</li>
+<li><strong>Entra y abre el taller.</strong> Acepta el paquete de recursos y escribe <code>/trigger taller.open</code>. Los jugadores no necesitan OP para usarlo.</li>
+</ol>
+<p>Si ya envías un paquete de recursos propio, integra los archivos de Taller en el tuyo, conserva su URL y actualiza el SHA-1 del ZIP combinado. <a href="https://github.com/JavierLoro/minecraft-ui-guide/blob/main/demo/DESARROLLO.md#combinar-con-otros-recursos">Cómo combinar los recursos</a>.</p>
+<p>Los ZIP están preparados para instalarse directamente. Python solo se usa para desarrollar y regenerar el proyecto.</p>
+<p><strong>Comprobación:</strong> en Ajustes puedes ocultar el HUD, cambiar el tamaño del pedido y volver al menú. La vista centrada es la inicial; el anclaje requiere comprobar su posición en el cliente.</p>
+</div></details>
+<details class="technical"><summary>Adaptar el proyecto y consultar sus archivos</summary><div class="technical-body"><div class="controls"><a class="chip" href="downloads/minecraft-ui-demo.zip" download>Descargar fuentes</a><a class="chip" href="https://github.com/JavierLoro/minecraft-ui-guide/tree/main/demo">Ver código</a></div><ul class="source-links"><li><a href="demo/README.md">Funcionalidad y estructura del proyecto</a>.</li><li><a href="demo/DESARROLLO.md">Herramientas de desarrollo</a> y <a href="demo/AGENTS.md">mapa para agentes</a>.</li><li><a href="demo/versions.json">Versiones fijadas</a> y <a href="demo/CAPTURAS.md">pruebas y capturas</a>.</li></ul></div></details>
 </section>
 <section class="section" id="referencia"><h2>Para seguir profundizando</h2><details class="technical"><summary>Consultar el manual técnico completo</summary><div class="technical-body"><div class="search-row"><input id="search" type="search" aria-label="Buscar en el manual" placeholder="Buscar un tema"><button class="chip" id="expand-all">Abrir capítulos</button><button class="chip" id="collapse-all">Cerrar capítulos</button></div><p class="search-status" id="search-status" role="status">29 capítulos</p><div id="chapters"><details class="chapter" id="cap-1"><summary>1. Qué permite construir la idea</summary><div class="chapter-body"><p>Un menú abre una pantalla para elegir acciones. El HUD muestra información durante el juego. Un botón puede mostrar una explicación al pasar el ratón; un interruptor cambia una preferencia y actualiza lo que ves.</p>
 <p>Taller implementa pedidos, cobro único, botones, tooltips, ajustes y HUD. Las mascotas y las transiciones complejas son ampliaciones posibles, no funciones ya incluidas.</p>
@@ -58,7 +75,7 @@
 </ul>
 <p>En una partida individual las funciones también se ejecutan en el servidor interno del juego. En la demo, el código de las reglas está en <a href="https://github.com/JavierLoro/minecraft-ui-guide/tree/main/demo/datapack/data/taller/function/logic/">logic/</a>.</p>
 </div></details>
-<details class="chapter" id="cap-3"><summary>3. Versión de referencia</summary><div class="chapter-body"><p>La demo está fijada a Minecraft Java <strong>26.3</strong>, datapack <strong>121.0</strong> y recursos <strong>97.1</strong>. El servidor oficial requiere Java 25. Las versiones y el origen verificable de su JAR están en <a href="demo/versions.json">versions.json</a>.</p>
+<details class="chapter" id="cap-3"><summary>3. Versión de referencia</summary><div class="chapter-body"><p>La demo está fijada a Minecraft Java <strong>26.3</strong>, datapack <strong>121.0</strong> y recursos <strong>97.1</strong>. Las versiones y el origen verificable de su JAR están en <a href="demo/versions.json">versions.json</a>.</p>
 <p>Los formatos cambian entre versiones. No presentar este shader como compatible con cualquier cliente. <a href="https://www.minecraft.net/en-us/article/minecraft-java-edition-26-3">Notas oficiales de 26.3</a>.</p>
 </div></details>
 <details class="chapter" id="cap-4"><summary>4. Estructura de la demo</summary><div class="chapter-body"><pre><code class="language-text">demo/
@@ -71,12 +88,13 @@
     function/test/     autopruebas nativas
     dialog/            pantallas registradas
   pack/assets/         fuentes, texturas y shader
-  tools/               generación, comprobación y arranque
+  tools/               generación y comprobación para desarrollo
 </code></pre>
 <p>No hay un plugin ni una API de servidor externa. Los <a href="demo/README.md">archivos del proyecto</a> son el punto de partida para implementar.</p>
 </div></details>
-<details class="chapter" id="cap-5"><summary>5. Cargar el paquete de recursos</summary><div class="chapter-body"><p>El cliente debe cargar las imágenes y las fuentes para dibujar el aspecto previsto. En un mundo individual, instala y activa <a href="downloads/taller-resources.zip">taller-resources.zip</a>. El servidor local preparado por <a href="demo/tools/dev.py">dev.py</a> sirve ese ZIP y lo requiere al conectar.</p>
-<p>El datapack no detecta por sí solo el estado de la descarga. El servidor de Minecraft no se incluye en el descargable; se obtiene desde Mojang y se verifica su hash.</p>
+<details class="chapter" id="cap-5"><summary>5. Cargar el paquete de recursos</summary><div class="chapter-body"><p>El cliente debe cargar las imágenes y las fuentes para dibujar la interfaz. La <a href="demo/INSTALACION.md">instalación para un servidor existente</a> incluye una URL de recursos ya alojada en la guía y su SHA-1. Se configura en <code>server.properties</code>; los jugadores aceptan el paquete al conectar.</p>
+<p>No hace falta añadir un servicio HTTP al servidor. Si ya distribuyes recursos propios, incorpora los archivos de Taller en ese paquete y actualiza su SHA-1, conservando su URL. En un mundo individual, puedes activar <a href="downloads/taller-resources.zip">taller-resources.zip</a> desde el cliente.</p>
+<p>El <a href="downloads/taller-instalacion.zip">paquete de instalación</a> trae ambos ZIP y el fragmento de configuración. Las <a href="demo/DESARROLLO.md">herramientas para desarrollar</a> se mantienen aparte.</p>
 </div></details>
 <details class="chapter" id="cap-6"><summary>6. Imágenes que se comportan como letras</summary><div class="chapter-body"><p>Una fuente bitmap relaciona un carácter con una imagen. Cuando Minecraft dibuja ese carácter, aparece el gráfico. Así se pueden combinar iconos, marcos y texto en una composición.</p>
 <p>Referencias: <a href="demo/pack/assets/taller/font/hud.json">hud.json</a>, <a href="demo/pack/assets/taller/font/icons.json">icons.json</a> y <a href="demo/tools/make_assets.py">generador de gráficos</a>. Los caracteres privados elegidos son un contrato de la demo.</p>
@@ -142,7 +160,7 @@
 <p><a href="demo/datapack/data/taller/function/player/tick.mcfunction">Player/tick.mcfunction</a> administra la cola, el enfriamiento y la habilitación de triggers. Cada bossbar pertenece a su identificador de jugador.</p>
 </div></details>
 <details class="chapter" id="cap-26"><summary>26. Partir del proyecto base</summary><div class="chapter-body"><ol>
-<li>Instala el datapack y los recursos en un mundo de pruebas de 26.3.</li>
+<li>Instala los ZIP preparados en tu servidor 26.3 siguiendo <a href="demo/INSTALACION.md">estos cuatro pasos</a>.</li>
 <li>Abre <code>/trigger taller.open</code> sin OP y recorre las acciones.</li>
 <li>Cambia una regla en <code>logic/</code> y comprueba su efecto.</li>
 <li>Modifica una textura o una fuente y revisa las métricas del HUD.</li>
@@ -162,7 +180,7 @@ data get storage taller:test report
 <li><strong>Faltan dibujos:</strong> comprobar que el paquete de recursos está activo y es el de la misma versión.</li>
 <li><strong>No cobra:</strong> comprobar objetivo, progreso y marca de cobro; no modificar solo la etiqueta.</li>
 <li><strong>El anclaje falla:</strong> volver al modo centrado y revisar versión, escala y shader.</li>
-<li><strong>Cambios sin actualizar:</strong> ejecutar <code>python demo/tools/build.py</code> y recargar el datapack o reiniciar el mundo de pruebas.</li>
+<li><strong>Cambios sin actualizar:</strong> instalar la nueva versión del ZIP del datapack y reiniciar el servidor. Si has editado las fuentes, consulta <a href="demo/DESARROLLO.md">DESARROLLO.md</a> para regenerarlo.</li>
 </ul>
 <p>No publicar registros con datos de jugadores. No utilizar mundos importantes para las primeras pruebas.</p>
 </div></details>
