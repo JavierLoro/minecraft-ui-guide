@@ -6,6 +6,10 @@ La solución combina tres piezas: un plugin mantiene los datos y las acciones, l
 
 No hace falta experiencia previa con shaders para entender la arquitectura. Para implementar el sistema sí se necesita programar en la plataforma de servidor elegida, editar archivos JSON y crear los recursos gráficos. La guía presenta decisiones y ejemplos; no es un plugin completo listo para instalar.
 
+![Un servidor, Minecraft y un paquete de recursos forman un menú y el HUD.](assets/images/interface-overview.png)
+
+El servidor aporta las reglas; Minecraft, los canales y controles; el paquete, la apariencia. El menú se abre al interactuar y el HUD permanece durante el juego. Ilustración conceptual generada con IA.
+
 ## 1. Qué vas a construir
 
 | Funcionalidad | Función de Minecraft | Trabajo de tu sistema |
@@ -338,6 +342,17 @@ Este ejemplo es pseudocódigo: `Player`, `UiAction` y los servicios se sustituye
 Separar acciones de interfaz y operaciones de negocio. Una recompensa se reclama mediante un servicio idempotente que evita duplicados, no añadiendo monedas directamente desde cada componente clicable.
 
 ## 15. Crear el HUD mediante una bossbar
+
+![Mundo, barra nativa, recursos gráficos y HUD final separados por capas.](assets/images/hud-layers.png)
+
+De abajo arriba, la ilustración resume la construcción del HUD:
+
+1. **Mundo:** la escena del juego continúa detrás de los paneles.
+2. **Canal nativo:** el nombre de la bossbar transporta los componentes.
+3. **Fuentes y texturas:** los glifos convierten caracteres en iconos y paneles.
+4. **Shader:** recoloca los grupos y dibuja el HUD final.
+
+Son etapas de construcción, no cuatro superficies reales del motor. Ilustración conceptual generada con IA.
 
 Una bossbar contiene un nombre que puede ser un componente de texto. Compón en ese nombre los paneles de tu interfaz, con gráficos, valores y marcadores de posición.
 
