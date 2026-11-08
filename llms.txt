@@ -21,3 +21,9 @@
 ## Alcance
 
 Los ejemplos no forman un plugin listo para instalar. La codificación RGB, los nombres de acciones y los glifos son decisiones de la aplicación. Adaptar y verificar las APIs y shaders en la versión exacta del proyecto.
+
+## Demo reutilizable
+
+- [Proyecto Paper ejecutable](demo/README.md): arranque, recorrido y adaptación.
+- [Arquitectura de la demo](demo/AGENTS.md): mapa del código para agentes.
+- [Pruebas en Minecraft y capturas](demo/CAPTURAS.md): comprobaciones que requieren el cliente.

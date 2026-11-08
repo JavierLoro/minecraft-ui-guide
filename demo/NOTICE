@@ -1,0 +1,3 @@
+The original demo source and generated taller assets are licensed under MIT.
+pack/assets/minecraft/shaders/core/text.vsh is based on the Minecraft Java 26.3 client shader by Mojang Studios, with a separately marked Taller anchor modification. Minecraft and its original resources remain subject to their own terms: https://www.minecraft.net/eula .
+Gradle Wrapper files are from Gradle 9.2.1, licensed under Apache-2.0: https://github.com/gradle/gradle/blob/v9.2.1/LICENSE .

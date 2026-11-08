@@ -2,6 +2,16 @@
 
 Manual interactivo y documentación Markdown para construir menús, botones, toggles, tooltips, formularios, HUD y transiciones mediante funciones nativas y paquetes de recursos.
 
+## Demo reutilizable en Minecraft
+
+La demo **Taller** incluye un plugin de Paper 26.3, un paquete de recursos propio, pruebas y scripts de arranque local. Tiene pedidos, botones y tooltips, cuatro tipos de controles, preferencias persistentes y un HUD por bossbar.
+
+- [Proyecto e instrucciones](demo/README.md)
+- [ZIP con código y plugin compilado](downloads/minecraft-ui-demo.zip)
+- [Entrada para agentes](demo/AGENTS.md)
+
+La comprobación visual y las capturas se realizan dentro de Minecraft siguiendo [este recorrido](demo/CAPTURAS.md).
+
 ## Publicar en GitHub Pages
 
 ### Publicación automática desde PowerShell
@@ -76,4 +86,4 @@ Abrir `http://localhost:8000/`. También se puede abrir `index.html` directament
 
 ## Alcance
 
-Es una guía con ejemplos y demostraciones didácticas; no contiene un plugin compilado ni un servidor de Minecraft. Las APIs, shaders y formatos deben adaptarse a la versión que se vaya a implementar.
+La guía contiene ejemplos y simulaciones didácticas. `demo/` añade un plugin ejecutable específico para Paper 26.3 y Java 25; `downloads/` contiene el proyecto empaquetado, el plugin y sus recursos. No se redistribuye el servidor de Minecraft: el arranque descarga y verifica Paper desde su origen oficial. El shader anclado requiere comprobación visual con el cliente objetivo.

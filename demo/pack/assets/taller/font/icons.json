@@ -1,0 +1,28 @@
+{
+  "providers": [
+    {
+      "type": "space",
+      "advances": {
+        " ": 4
+      }
+    },
+    {
+      "type": "bitmap",
+      "file": "taller:icons/toggle_on.png",
+      "height": 12,
+      "ascent": 10,
+      "chars": [
+        ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "taller:icons/toggle_off.png",
+      "height": 12,
+      "ascent": 10,
+      "chars": [
+        ""
+      ]
+    }
+  ]
+}

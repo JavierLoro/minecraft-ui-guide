@@ -10,6 +10,8 @@ No hace falta experiencia previa con shaders para entender la arquitectura. Para
 
 El servidor aporta las reglas; Minecraft, los canales y controles; el paquete, la apariencia. El menú se abre al interactuar y el HUD permanece durante el juego. Ilustración conceptual generada con IA.
 
+Puedes aplicar la guía sobre **Taller**, nuestra [demo reutilizable de Paper](demo/README.md). El [ZIP del proyecto](downloads/minecraft-ui-demo.zip) contiene código, plugin compilado, paquete de recursos y arranque local. Está fijada a Minecraft 26.3 y Java 25; los ejemplos genéricos de esta guía deben adaptarse a ese proyecto concreto.
+
 ## 1. Qué vas a construir
 
 | Funcionalidad | Función de Minecraft | Trabajo de tu sistema |
@@ -529,6 +531,8 @@ Para representar máquinas en el mundo puedes diseñar una integración con enti
 La medición debe incluir CPU del servidor, volumen de actualizaciones, tamaño de paquetes y coste gráfico en un cliente modesto. El recurso de fuentes puede ocupar atlas grandes; miles de variantes no son gratis.
 
 ## 26. Orden de construcción
+
+Para partir de código ejecutable, consulta [Taller](demo/README.md) y su [mapa para agentes](demo/AGENTS.md). `WorkshopState` contiene las reglas del pedido; `DemoDialogs`, las pantallas; `SessionGate`, la validación; `ProfileStore`, las preferencias; y `HudRenderer`, la composición de la bossbar. El namespace, los colores y las métricas de la demo forman su propio contrato, no una implementación literal de todos los ejemplos de esta guía.
 
 1. Fijar versión y arrancar un servidor de desarrollo con cliente vanilla.
 2. Crear un diálogo con texto, botón nativo y cierre por Escape.

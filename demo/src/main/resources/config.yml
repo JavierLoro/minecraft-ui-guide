@@ -1,0 +1,10 @@
+# Servicio del paquete para un cliente en este mismo equipo.
+# Para otros equipos, aloja el ZIP y cambia public-url.
+resource-pack:
+  bind: 127.0.0.1
+  port: 8127
+  public-url: http://127.0.0.1:8127/pack.zip
+# El modo nativo no depende de la recolocacion del shader.
+# /uidemo anclado permite probar el panel en la esquina superior izquierda.
+hud:
+  anchored-by-default: false

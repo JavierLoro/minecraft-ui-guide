@@ -1,0 +1,11 @@
+{
+  "minecraft": "26.3",
+  "java": 25,
+  "paper": {
+    "build": 244,
+    "url": "https://fill-data.papermc.io/v1/objects/9601f9a26a2a52a0f2c807cf1abf691f96ee4fb287878313b601cebc2c51eabf/paper-26.3-244.jar",
+    "sha256": "9601f9a26a2a52a0f2c807cf1abf691f96ee4fb287878313b601cebc2c51eabf"
+  },
+  "paperApi": "26.3.build.244-stable",
+  "gradle": "9.2.1"
+}

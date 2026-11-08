@@ -1,0 +1,21 @@
+{
+  "providers": [
+    {
+      "type": "space",
+      "advances": {
+        " ": 4
+      }
+    },
+    {
+      "type": "bitmap",
+      "file": "taller:font/hud.png",
+      "height": 8,
+      "ascent": -14,
+      "chars": [
+        "ABCDEFGHIJKLMNOP",
+        "QRSTUVWXYZ012345",
+        "6789/-"
+      ]
+    }
+  ]
+}

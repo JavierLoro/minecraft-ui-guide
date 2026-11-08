@@ -1,0 +1,13 @@
+name: MinecraftUiDemo
+version: '${version}'
+main: io.github.javierloro.uidemo.UiDemoPlugin
+api-version: '26.3'
+description: Demo reutilizable de dialogos, recursos y HUD.
+commands:
+  uidemo:
+    description: Abre el taller de demostracion.
+    usage: /uidemo [menu|ajustes|hud|nativo|anclado|pack]
+    permission: uidemo.use
+permissions:
+  uidemo.use:
+    default: true

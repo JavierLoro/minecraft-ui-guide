@@ -1,6 +1,6 @@
 # Interfaces de Minecraft Java: lectura rápida para agentes
 
-Este repositorio es una guía técnica independiente, no un plugin instalable. Usa este archivo para orientarte y consulta [la guía completa](GUIA-INTERFACES-MINECRAFT.md) para implementar. El [HTML interactivo](index.html) explica visualmente la misma arquitectura.
+Este repositorio reúne una guía técnica independiente y una demo reutilizable de Paper en `demo/`. La guía explica el sistema; la demo aporta un plugin compilable, recursos propios y un arranque local. Usa este archivo para orientarte y consulta [la guía completa](GUIA-INTERFACES-MINECRAFT.md) para implementar. El [HTML interactivo](index.html) explica visualmente la misma arquitectura.
 
 ## Modelo mental
 
@@ -71,3 +71,12 @@ La [guía completa](GUIA-INTERFACES-MINECRAFT.md) está numerada para facilitar 
 - Mantener el sitio independiente de servidores concretos y sin registros ni rutas personales.
 
 `llms.txt` sirve como índice de descubrimiento. No garantiza que un agente lo lea automáticamente: compartir directamente la URL de este archivo cuando se necesite una incorporación rápida.
+
+## Demo ejecutable
+
+- Entrada del proyecto y comandos: [demo/README.md](demo/README.md).
+- Arquitectura para agentes: [demo/AGENTS.md](demo/AGENTS.md).
+- Paper 26.3 build 244, JDK 25, Gradle Wrapper 9.2.1; versiones fijadas en `demo/versions.json`.
+- En `demo/`: `gradlew.bat build` / `sh gradlew build`, y `python tools/check_pack.py`.
+- Después de compilar: `python tools/package_demo.py` desde la raíz regenera los descargables. Nunca incluir `demo/run/`, cachés, mundos, perfiles ni registros.
+- `demo/CAPTURAS.md` define las pruebas en el cliente. No afirmar que el shader o la interfaz han sido comprobados visualmente solo porque compile Java.
