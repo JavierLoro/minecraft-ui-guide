@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cómo crear interfaces en Minecraft Java</title>
+<meta name="description" content="Guía para crear menús, botones, toggles y HUD en Minecraft Java con diálogos, fuentes, bossbars y shaders. Lectura visual y documentación para agentes.">
+<link rel="alternate" type="text/markdown" href="AGENTS.md" title="Lectura rápida para agentes">
+<link rel="alternate" type="text/markdown" href="GUIA-INTERFACES-MINECRAFT.md" title="Guía completa en Markdown">
+<link rel="alternate" type="text/plain" href="llms.txt" title="Índice para agentes">
+<style>
+:root{--paper:#f5f7fa;--ink:#172b45;--muted:#50647b;--line:#d3dce6;--nav:#18304c;--teal:#087e89;--amber:#b86013;--purple:#7351aa;--white:#fff;--mono:Consolas,'Liberation Mono',monospace;--sans:'Segoe UI',Calibri,Arial,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:35px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--sans)}button,input{font:inherit}button,a,input,summary,[tabindex]{outline-offset:5px}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid #c25e13}button{cursor:pointer}a{color:var(--teal);text-underline-offset:3px}code,pre{font-family:var(--mono);font-size:.86em}code{overflow-wrap:anywhere}pre{padding:20px;background:#eaf0f5;border-left:3px solid #9eafc1;overflow:auto;line-height:1.7}pre code{overflow-wrap:normal}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(36px,5vw,62px);font-weight:650;letter-spacing:-2px;line-height:1.08;margin-bottom:23px}h2{font-size:30px;letter-spacing:-.8px;line-height:1.2;margin-bottom:16px}h3{font-size:19px;line-height:1.4}p{max-width:76ch}small{font-size:13px}.shell{display:grid;grid-template-columns:220px minmax(0,1fr);min-height:100vh}.rail{background:var(--nav);color:#e1eaf3;padding:35px 25px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:32px}.brand{color:#fff;line-height:1.25;font-size:22px;font-weight:700;letter-spacing:-.5px}.brand svg{display:block;margin-bottom:15px}.rail nav{display:flex;flex-direction:column;gap:3px}.rail nav a{color:#cfdbeb;text-decoration:none;padding:10px 12px;border-left:2px solid transparent}.rail nav a:hover,.rail nav a[aria-current]{background:#24425e;color:white;border-left-color:#72d0d4}.rail .edition{margin-top:auto;font-size:13px;color:#b1c2d6;border-top:1px solid #476079;padding-top:20px}.rail .edition strong{display:block;color:#fff;font-size:15px}.content{max-width:1510px;padding:55px clamp(25px,5vw,78px) 50px;min-width:0}.intro{display:grid;grid-template-columns:1fr auto;align-items:end;gap:25px;margin-bottom:35px}.intro p{font-size:19px;color:var(--muted);margin-bottom:0;max-width:64ch}.file-link{border-bottom:1px solid var(--teal);text-decoration:none;padding-bottom:4px;white-space:nowrap;font-size:14px}.section{padding:46px 0;border-top:1px solid var(--line);scroll-margin-top:25px}.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px}.section-head p{color:var(--muted);max-width:62ch}.legend{display:flex;flex-wrap:wrap;gap:19px;font-size:13px;margin:18px 0 22px}.dot{width:10px;height:10px;display:inline-block;margin-right:6px;border-radius:50%}.teal{background:var(--teal)}.amber{background:var(--amber)}.purple{background:var(--purple)}.blue{background:var(--nav)}.map{background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden}.map svg{display:block;width:100%;height:auto;min-width:700px}.map-scroll{overflow:auto}.node rect{fill:#f3f7fa;stroke:#a6b8cb;stroke-width:1.5}.node text{font:17px var(--sans);fill:var(--ink)}.node .sub{font:12px var(--mono);fill:var(--muted)}.node[data-group="native"] rect{fill:#e5f4f4;stroke:#56a7ad}.node[data-group="pack"] rect{fill:#fff2e4;stroke:#d8a062}.node[data-group="shader"] rect{fill:#eee9f6;stroke:#a38bbd}.node{cursor:pointer}.node.active rect{stroke:#172b45;stroke-width:3}.edge{fill:none;stroke:#a0b3c8;stroke-width:2;marker-end:url(#arrow)}.edge.back{stroke:#087e89;stroke-dasharray:6 5}.map-label{font:13px var(--sans);fill:#53677c}.inspector{padding:23px 28px;border-top:1px solid var(--line);display:grid;grid-template-columns:210px 1fr;gap:25px}.inspector h3{margin:0}.inspector p{margin:0;color:var(--muted)}.inspector code{display:block;color:var(--ink);margin-top:10px}.split{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,1fr);gap:28px}.panel{background:white;border:1px solid var(--line);border-radius:6px;padding:24px}.panel h3{margin-bottom:12px}.controls{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}.chip{border:1px solid #aabacc;background:#fff;color:var(--ink);padding:8px 15px;border-radius:4px;font-size:14px}.chip[aria-pressed="true"]{background:var(--nav);color:#fff;border-color:var(--nav)}.world{height:340px;position:relative;overflow:hidden;background:#8fb5d6;border:1px solid #b5c2d0;border-radius:5px}.scene{position:absolute;inset:0;width:100%;height:100%}.world .hotbar{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);width:190px;height:26px;background:repeating-linear-gradient(90deg,#33424c 0 19px,#aeb4b0 19px 21px);border:3px solid #b7b9b2;box-shadow:0 0 0 2px #3d423d}.game-hud{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:270px;background:#253041;color:#e5eaf1;border:3px solid #111b27;box-shadow:inset 0 0 0 1px #718293;padding:10px;font:13px/1.6 var(--mono)}.game-hud:before{content:'';height:4px;display:block;background:repeating-linear-gradient(45deg,#f1c253 0 5px,#3f3a2d 5px 10px);margin:-7px -7px 6px}.game-hud b{font-size:13px;color:#f1c253}.game-hud .meter{height:9px;border:1px solid #121b24;background:repeating-linear-gradient(90deg,#182332 0 4px,#384555 4px 5px);margin-top:6px}.game-hud .fill{height:100%;width:42%;background:repeating-linear-gradient(90deg,#66c9d0 0 4px,#225b69 4px 5px)}.raw-name{position:absolute;top:35px;left:12%;right:12%;font:12px var(--mono);text-align:center;color:#fff;text-shadow:1px 1px #1c2734;overflow-wrap:anywhere}.native-bar{position:absolute;top:15px;left:22%;width:56%;height:8px;background:#fff;border:2px solid #444}.avatar{position:absolute;right:14px;bottom:18px;display:flex;gap:8px;align-items:center;background:#243042;color:#fff;padding:9px 12px;border:2px solid #a4b2c0;font:12px var(--mono)}.avatar .face{width:27px;height:27px;background:linear-gradient(#2a3b4f 35%,#68cad5 35% 46%,#2a3b4f 46% 66%,#d0ad49 66%);border:2px solid #d0ad49}.world[data-stage="native"] .game-hud,.world[data-stage="native"] .avatar{display:none}.world[data-stage="pack"] .native-bar,.world[data-stage="pack"] .raw-name,.world[data-stage="pack"] .avatar{display:none}.world[data-stage="shader"] .native-bar,.world[data-stage="shader"] .raw-name{display:none}.world[data-stage="pack"] .game-hud{top:22px}.world[data-stage="shader"] .game-hud{left:15px;transform:none}.world[data-stage="shader"].hide-factory .game-hud{display:none}.state-note{font-size:14px;margin:14px 0 0;color:var(--muted);min-height:48px}.contract{border-top:1px solid var(--line);margin-top:18px;padding-top:18px}.contract dl{display:grid;grid-template-columns:85px 1fr;gap:8px;margin:0;font-size:14px}.contract dt{font-weight:700}.contract dd{margin:0}.contract code{font-size:12px}.switch-row{display:flex;align-items:center;justify-content:space-between;gap:15px}.switch{width:48px;height:27px;flex-shrink:0;border:0;border-radius:4px;background:#74869a;position:relative}.switch:after{content:'';width:19px;height:19px;position:absolute;left:4px;top:4px;background:#fff;border-radius:2px;transition:transform .15s}.switch[aria-checked="true"]{background:var(--teal)}.switch[aria-checked="true"]:after{transform:translateX(21px)}.tooltip-wrap{position:relative;display:inline-block}.tooltip{position:absolute;bottom:calc(100% + 12px);left:0;background:#21172d;color:#f5edf8;border:2px solid #75529b;padding:10px 13px;width:220px;font-size:13px;line-height:1.45;pointer-events:none;opacity:0;z-index:3}.tooltip-wrap:hover .tooltip,.tooltip-wrap:focus-within .tooltip{opacity:1}.mc-button{border:2px solid #496677;background:#e6f4f4;color:#163b47;box-shadow:inset 0 -3px #c2e0e1;padding:10px 20px;font-weight:600;border-radius:3px}.mc-button:hover{background:#d2edef}.mini-menu{margin:20px 0;padding:20px;background:#eaf0f5;border:1px solid #c6d3e0}.mini-menu .switch-row{padding-bottom:20px;margin-bottom:19px;border-bottom:1px solid #c4d1df}.steps{list-style:none;padding:0;margin:22px 0;display:flex;gap:0}.steps li{flex:1;position:relative}.steps li:not(:last-child):after{content:'';position:absolute;height:2px;background:#c5d1de;left:50%;right:-50%;top:17px;z-index:0}.step{border:0;background:transparent;width:100%;text-align:center;color:var(--muted);font-size:13px;padding:0 5px;position:relative;z-index:1}.step span{width:35px;height:35px;display:block;margin:0 auto 8px;background:#e6edf4;border:1px solid #afc0d1;border-radius:50%;line-height:32px;font-weight:700}.step[aria-pressed="true"]{color:var(--ink);font-weight:600}.step[aria-pressed="true"] span{background:var(--teal);color:#fff;border-color:var(--teal)}.step.done span{border-color:var(--teal);color:var(--teal)}.event-code{background:#192f49;color:#dce8f5;font:13px/1.85 var(--mono);padding:21px;white-space:pre-wrap;overflow-wrap:anywhere;min-height:190px;border-radius:4px}.event-code .key{color:#87d4d4}.event-code .value{color:#f7ce82}.next{background:var(--nav);color:#fff;border:0;padding:9px 17px;border-radius:4px;font-size:14px}.trace-status{margin:13px 0;color:var(--muted);font-size:14px;min-height:42px}.bit-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:25px 0}.bit{border-top:4px solid var(--line);padding:15px;background:white;border-bottom:1px solid var(--line)}.bit:nth-child(1){border-top-color:#bf4c60}.bit:nth-child(2){border-top-color:#087e89}.bit:nth-child(3){border-top-color:#4d72ba}.bit b{font:26px var(--mono);display:block;margin-bottom:7px}.bit p{font-size:14px;margin:0;color:var(--muted)}.formula{background:#edf0f6;padding:19px;border-left:3px solid var(--purple);margin-top:20px;font-family:var(--mono);font-size:13px;line-height:2}.table-scroll{overflow:auto}table{width:100%;border-collapse:collapse;background:#fff;font-size:14px;margin:20px 0}th,td{padding:14px 17px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}th{background:#e9eff5;font-weight:600}td:first-child{font-weight:600}.feature-table td:nth-child(2){color:var(--teal)}.feature-table td:nth-child(3){color:var(--muted)}.sequence{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:#fff;margin-top:25px}.seq{padding:22px;border-right:1px solid var(--line)}.seq:last-child{border-right:0}.seq strong{font:28px var(--mono);color:#8a9caf;display:block;margin-bottom:15px}.seq p{font-size:14px;color:var(--muted);margin-bottom:0}.seq h3{font-size:17px}.source-grid{display:grid;grid-template-columns:1fr 1fr;gap:25px}.source-grid ul{padding-left:20px}.source-grid li{margin-bottom:12px}.source-grid p,.source-grid li{font-size:14px;color:var(--muted)}.search-row{display:flex;gap:12px;margin:25px 0}.search-row input{width:100%;padding:12px 15px;border:1px solid #a8bacb;border-radius:4px;background:white;color:var(--ink)}.search-row button{white-space:nowrap}.chapter{border-top:1px solid var(--line);background:#fff}.chapter:last-child{border-bottom:1px solid var(--line)}summary{cursor:pointer;padding:18px 22px;font-weight:600;line-height:1.5}.chapter-body{padding:5px 25px 28px}.chapter-body h2{font-size:23px}.chapter-body p,.chapter-body li{font-size:15px;max-width:85ch}.chapter-body table{font-size:13px;display:block;overflow:auto}.chapter-body pre{font-size:12px}.search-status{font-size:14px;color:var(--muted);margin-bottom:15px}footer{display:flex;gap:20px;justify-content:space-between;padding-top:25px;font-size:13px;color:var(--muted)}.proof{padding:16px 20px;border-left:3px solid var(--teal);background:#e8f3f3;font-size:14px;margin:25px 0}.transition-box{height:160px;background:#c9dfe9;position:relative;overflow:hidden;display:grid;place-items:center;border:1px solid #a9c0cc;border-radius:4px}.curtain{position:absolute;left:0;right:0;height:52%;background:repeating-linear-gradient(135deg,#25384d 0 10px,#2c3f54 10px 20px);border-bottom:5px solid #d4a74b;top:-54%;transition:top .45s}.curtain.bottom{top:auto;bottom:-54%;border-bottom:0;border-top:5px solid #d4a74b;transition:bottom .45s}.transition-box.closed .curtain{top:0}.transition-box.closed .curtain.bottom{top:auto;bottom:0}.transition-box>span{font-weight:600;color:#36546c}.btnline{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:20px 0}.figure-caption{margin:12px 0 0;color:var(--muted);font-size:13px}.hidden,[hidden]{display:none!important}
+@media(min-width:1450px){.content{padding-left:65px;padding-right:65px}.world{height:370px}}@media(max-width:1050px){.shell{grid-template-columns:180px 1fr}.rail{padding:28px 17px}.content{padding:40px 25px}.split{grid-template-columns:1fr}.sequence{grid-template-columns:1fr 1fr}.seq:nth-child(2){border-right:0}.seq:nth-child(-n+2){border-bottom:1px solid var(--line)}.intro{grid-template-columns:1fr}.file-link{justify-self:start}.inspector{grid-template-columns:160px 1fr}.source-grid{grid-template-columns:1fr}}@media(max-width:700px){.shell{display:block}.rail{height:auto;position:relative;padding:18px 20px;gap:15px}.brand{font-size:20px}.brand svg,.edition{display:none}.rail nav{flex-direction:row;overflow-x:auto;gap:3px}.rail nav a{white-space:nowrap;font-size:13px;padding:7px 10px;border-left:0;border-bottom:2px solid transparent}.rail nav a[aria-current]{border-bottom-color:#72d0d4}.content{padding:34px 20px}.intro p{font-size:16px}h1{letter-spacing:-1.2px}h2{font-size:26px}.section{padding:32px 0}.section-head{display:block}.inspector{grid-template-columns:1fr;gap:8px;padding:20px}.panel{padding:19px}.bit-grid{gap:6px}.bit{padding:11px}.bit p{font-size:12px}.bit b{font-size:22px}.sequence{grid-template-columns:1fr}.seq{border-right:0;border-bottom:1px solid var(--line)}.seq:last-child{border-bottom:0}.search-row{flex-wrap:wrap}.step{font-size:11px}.steps{margin-left:-5px;margin-right:-5px}.world{height:310px}.game-hud{width:238px;font-size:12px}.avatar{font-size:10px;padding:7px}.chapter-body{padding:5px 17px 22px}summary{padding:15px 17px;font-size:15px}footer{display:block}footer span{display:block;margin-bottom:8px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+@media print{.rail,.controls,.search-row,.steps,.next,.no-print{display:none!important}.shell{display:block}.content{padding:0;max-width:none}.section{break-inside:avoid}.split,.source-grid{display:block}.panel{margin-bottom:15px}.chapter{break-inside:auto}.chapter-body{display:block!important}details:not([open])>:not(summary){display:block!important}h1{font-size:36px}.world{height:260px}body{background:#fff}.map svg{min-width:0}a{color:inherit}.search-status{display:none}}
+
+.primer{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(250px,1fr);gap:45px;margin-top:24px}.primer p{color:var(--muted);font-size:16px}.primer strong{color:var(--ink)}.primer-parts{list-style:none;margin:0;padding:0;border-left:2px solid #aac1d1}.primer-parts li{padding:0 0 22px 25px}.primer-parts li:last-child{padding-bottom:0}.primer-parts strong{font-size:19px}.primer-parts p{margin:6px 0 0;font-size:14px}.glossary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px;border-top:1px solid var(--line);padding-top:23px;margin:25px 0 0}.glossary dt{font-weight:650;margin-bottom:5px}.glossary dd{font-size:14px;color:var(--muted);margin:0}@media(max-width:850px){.primer{grid-template-columns:1fr;gap:20px}.glossary{grid-template-columns:1fr;gap:15px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="rail">
+  <div class="brand"><svg width="38" height="38" viewBox="0 0 38 38" aria-hidden="true"><path d="M2 11 19 2l17 9v17l-17 9L2 28Z" fill="none" stroke="#79cdd2" stroke-width="2"/><path d="m2 11 17 9 17-9M19 20v17" fill="none" stroke="#79cdd2" stroke-width="2"/><path d="m10 7 17 9v9" fill="none" stroke="#b6c8dd"/></svg>Interfaces<br>de Minecraft</div>
+  <nav aria-label="Secciones"><a href="#introduccion">Introducción</a><a href="#arquitectura">Conexiones</a><a href="#hud">Cómo se dibuja</a><a href="#interaccion">Clics y toggles</a><a href="#shader">Código del HUD</a><a href="#funciones">Funciones nativas</a><a href="#construccion">Construcción</a><a href="#agentes">Para agentes</a><a href="#referencia">Guía completa</a></nav>
+  <div class="edition"><strong>Minecraft Java</strong>Guía de implementación</div>
+</aside>
+<main class="content">
+  <header class="intro"><div><h1>Cómo crear interfaces<br>en Minecraft Java.</h1><p>Construye menús interactivos y paneles visibles durante el juego con un plugin de servidor, funciones nativas de Minecraft y un paquete de recursos.</p></div><a class="file-link" href="GUIA-INTERFACES-MINECRAFT.md">Abrir Markdown</a></header>
+  <section class="section" id="introduccion"><h2>Antes de empezar</h2><div class="primer"><div><p>Imagina un menú de habilidades: muestra tu nivel, explica cada mejora al pasar el ratón y permite activar una opción. Al cerrarlo, un panel en una esquina sigue mostrando tu progreso. Esta guía explica cómo construir las dos partes y conectarlas con los datos del servidor.</p><p>El <strong>menú</strong> utiliza un diálogo de Minecraft, con componentes de texto que pueden tener imágenes, clics y tooltips. El <strong>HUD</strong> es la información superpuesta mientras juegas: aquí se construye a partir del nombre de una barra de jefe y se distribuye por la pantalla con un shader.</p><p>El jugador necesita un cliente compatible que cargue el paquete de recursos. Tú necesitas programar el plugin, preparar imágenes y fuentes, y adaptar los shaders a una versión concreta. Primero verás el conjunto; después, las interacciones, el renderizado y los pasos de implementación.</p></div><ol class="primer-parts"><li><strong>Servidor</strong><p>Mantiene datos y preferencias, valida acciones y genera la siguiente pantalla.</p></li><li><strong>Minecraft</strong><p>Ofrece diálogos, eventos de clic y hover, bossbars, títulos y sonidos.</p></li><li><strong>Paquete de recursos</strong><p>Aporta imágenes, fuentes y shaders para construir la apariencia.</p></li></ol></div><dl class="glossary"><div><dt>Glifo</dt><dd>La imagen que representa un carácter; puede ser una letra, un icono o un panel.</dd></div><div><dt>Bossbar</dt><dd>Barra de jefe cuyo nombre se reutiliza como canal de texto para el HUD.</dd></div><div><dt>Shader</dt><dd>Programa gráfico que modifica la posición, el color o los píxeles dibujados.</dd></div></dl></section>
+
+  <section class="section" id="arquitectura"><div class="section-head"><h2>Las conexiones</h2><p>Selecciona una pieza del esquema para examinar su función.</p></div>
+  <div class="legend"><span><i class="dot blue"></i>Servidor</span><span><i class="dot teal"></i>Funciones nativas</span><span><i class="dot amber"></i>Recursos</span><span><i class="dot purple"></i>Renderizado</span></div>
+  <div class="map"><div class="map-scroll"><svg viewBox="0 0 1000 500" role="group" aria-label="Arquitectura interactiva de las interfaces de Minecraft">
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 8 4 0 8" fill="none" stroke="#8da3ba" stroke-width="1.2"/></marker></defs>
+  <path class="edge" d="M260 110H350"/><path class="edge" d="M260 250H300V110H350"/><path class="edge" d="M535 110H590V65H640"/><path class="edge" d="M590 110V170H640"/><path class="edge" d="M590 170V275H640"/><path class="edge" d="M850 65H905V170H945V365H850"/><path class="edge" d="M850 170H905"/><path class="edge" d="M850 275H905"/><path class="edge" d="M535 390H640"/><path class="edge" d="M745 322V365"/><path class="edge back" d="M640 430H570V470H135V298"/>
+  <text class="map-label" x="281" y="93">datos</text><text class="map-label" x="552" y="96">componentes</text><text class="map-label" x="866" y="325">dibujo</text><text class="map-label" x="330" y="461">clic personalizado → validación → nuevo estado</text>
+  <g class="node active" data-node="state" data-group="server" tabindex="0" role="button" aria-label="Datos y reglas del servidor" aria-pressed="true"><rect x="45" y="65" width="215" height="90" rx="5"/><text x="65" y="101">Datos y reglas</text><text class="sub" x="65" y="129">saldo · producción · objetivos</text></g>
+  <g class="node" data-node="router" data-group="server" tabindex="0" role="button" aria-label="Router de acciones" aria-pressed="false"><rect x="45" y="205" width="215" height="93" rx="5"/><text x="65" y="242">Router de acciones</text><text class="sub" x="65" y="270">sesión · permisos · estado</text></g>
+  <g class="node" data-node="composer" data-group="server" tabindex="0" role="button" aria-label="Compositor de componentes" aria-pressed="false"><rect x="350" y="65" width="185" height="90" rx="5"/><text x="370" y="101">Compositor</text><text class="sub" x="370" y="129">texto + glifos + eventos</text></g>
+  <g class="node" data-node="dialog" data-group="native" tabindex="0" role="button" aria-label="Diálogos nativos" aria-pressed="false"><rect x="640" y="23" width="210" height="84" rx="5"/><text x="660" y="58">Diálogos</text><text class="sub" x="660" y="85">menús · controles · hover</text></g>
+  <g class="node" data-node="bossbar" data-group="native" tabindex="0" role="button" aria-label="Nombre de bossbar" aria-pressed="false"><rect x="640" y="128" width="210" height="84" rx="5"/><text x="660" y="163">Nombre de bossbar</text><text class="sub" x="660" y="190">transporte del HUD</text></g>
+  <g class="node" data-node="title" data-group="native" tabindex="0" role="button" aria-label="Títulos de pantalla" aria-pressed="false"><rect x="640" y="233" width="210" height="84" rx="5"/><text x="660" y="268">Títulos</text><text class="sub" x="660" y="295">glifos para transiciones</text></g>
+  <g class="node" data-node="pack" data-group="pack" tabindex="0" role="button" aria-label="Paquete de recursos" aria-pressed="false"><rect x="320" y="347" width="215" height="86" rx="5"/><text x="340" y="383">Paquete de recursos</text><text class="sub" x="340" y="410">PNG · fuentes · shaders</text></g>
+  <g class="node" data-node="render" data-group="shader" tabindex="0" role="button" aria-label="Cliente y renderizado" aria-pressed="false"><rect x="640" y="365" width="210" height="84" rx="5"/><text x="660" y="400">Cliente y shaders</text><text class="sub" x="660" y="427">posición · color · píxeles</text></g>
+  </svg></div><div class="inspector" aria-live="polite"><h3 id="node-title">Datos y reglas</h3><div><p id="node-description">El servidor mantiene el estado autorizado: saldo, nivel, progreso y permisos. La interfaz representa esos datos; una imagen de máquina no implementa por sí sola la producción.</p><code id="node-code">estado → modelo de pantalla</code></div></div></div>
+  </section>
+
+  <section class="section" id="hud"><h2>Una bossbar, varios paneles</h2><p>El nombre de una barra de jefe transporta el texto del HUD. Las fuentes lo convierten en gráficos y el shader desplaza cada grupo a su posición.</p>
+  <div class="controls" aria-label="Capas de la simulación"><button class="chip" data-stage="native" aria-pressed="false">Canal nativo</button><button class="chip" data-stage="pack" aria-pressed="false">Fuentes y texturas</button><button class="chip" data-stage="shader" aria-pressed="true">Con shader</button></div>
+  <div class="split"><div><div class="world" id="world" data-stage="shader" role="img" aria-label="Simulación del HUD de una factoría">
+  <svg class="scene" viewBox="0 0 700 390" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="700" height="390" fill="#99bfdc"/><path d="M0 245 130 125 190 170 320 85 455 202 560 120 700 228V390H0Z" fill="#819fad"/><path d="m245 153 75-68 84 78-58-18-27 17-23-27Z" fill="#d5e0e3"/><path d="M0 270 120 220 230 265 380 218 540 272 700 219V390H0Z" fill="#52785e"/><path d="M0 315 200 290 370 305 520 277 700 313V390H0Z" fill="#78925c"/><g fill="#335c48"><path d="m75 188-26 80h52Z"/><path d="m108 203-22 66h44Z"/><path d="m590 181-28 89h56Z"/><path d="m635 215-21 64h42Z"/></g><path d="m80 350 165-25 130 25-15 40H80Z" fill="#8b8e7d"/><path d="m495 299 85-4 22 69-107 6Z" fill="#65746a"/><g stroke="#82916d" stroke-width="2"><path d="M0 365H700M220 325l-30 65m200-80 45 80"/></g></svg>
+  <div class="native-bar"></div><div class="raw-name">\uEC0D · \uF820 · Factoría · #03010B · \uE272 · 42/100</div>
+  <div class="game-hud"><b>⚒ Factoría de Alex</b><br>Primera mina <span style="float:right">42/100</span><div class="meter"><div class="fill"></div></div></div><div class="avatar"><div class="face"></div><div>Alex · Nivel 3<br><span style="color:#f1c253">800 monedas</span></div></div><div class="hotbar"></div>
+  </div><p class="figure-caption">Ejemplo visual del sistema que vas a construir.</p></div>
+  <div class="panel"><h3 id="layer-title">El shader recoloca los grupos</h3><p id="layer-description">La bossbar sigue siendo el canal. El shader interpreta marcadores RGB y dibuja cada fragmento en su anclaje de pantalla.</p><div class="contract"><dl><dt>Transporte</dt><dd>Nombre de bossbar</dd><dt>Gráficos</dt><dd>Glifos de <code>miui:hud</code></dd><dt>Posición</dt><dd><code>text.vsh</code></dd><dt>Barra blanca</dt><dd>Sprites transparentes de 182 × 5 px</dd></dl></div><div class="contract"><div class="switch-row"><span>Panel de la factoría</span><button class="switch" id="hud-toggle" role="switch" aria-checked="true" aria-label="Panel de la factoría"></button></div><p class="state-note" id="hud-state" aria-live="polite">Visible en la composición del HUD.</p></div></div></div>
+  <div class="proof">Al ocultar un panel, el servidor lo omite de la composición del HUD. Al mostrarlo, vuelve a incluir sus glifos y datos en el nombre de la bossbar.</div>
+  </section>
+
+  <section class="section" id="interaccion"><h2>Qué ocurre al pulsar</h2><p>Un gráfico en un diálogo puede llevar los mismos eventos que un componente de texto: clic y tooltip. El servidor decide el resultado y envía la siguiente pantalla.</p>
+  <div class="split"><div class="panel"><h3>Un interruptor es una acción con estado</h3><div class="mini-menu"><div class="switch-row"><span>Mostrar tarjeta del jugador</span><button id="demo-toggle" class="switch" role="switch" aria-checked="true" aria-label="Mostrar tarjeta del jugador" aria-describedby="toggle-status"></button></div><div class="tooltip-wrap"><button class="mc-button" id="economy-button" aria-describedby="economy-tooltip">Economía</button><span class="tooltip" id="economy-tooltip" role="tooltip">Abrir tu saldo y las operaciones disponibles.</span></div></div><p class="trace-status" id="toggle-status" aria-live="polite">Estado confirmado: activado. Glifo U+F196 → switch_on.png.</p><div class="contract"><code>hoverEvent → show_text<br>clickEvent → custom → miui:panel</code><p style="margin:12px 0 0;font-size:14px;color:var(--muted)">El tooltip de este ejemplo aparece también al enfocar el botón con el teclado. La demostración está hecha en HTML; reproduce el flujo que implementarías en Minecraft.</p></div></div>
+  <div class="panel"><h3>El recorrido del evento</h3><ol class="steps"><li><button class="step" data-step="0" aria-pressed="true"><span>1</span>Clic</button></li><li><button class="step" data-step="1" aria-pressed="false"><span>2</span>Envío</button></li><li><button class="step" data-step="2" aria-pressed="false"><span>3</span>Validación</button></li><li><button class="step" data-step="3" aria-pressed="false"><span>4</span>Estado</button></li><li><button class="step" data-step="4" aria-pressed="false"><span>5</span>Dibujo</button></li></ol><div class="event-code" id="trace-code" aria-live="polite">Jugador pulsa el componente gráfico.
+
+La imagen y la etiqueta pueden compartir
+la misma acción personalizada.</div><p class="trace-status" id="trace-description">La zona clicable depende del layout del texto. Mover píxeles con un shader no crea una zona de clic nueva.</p><button class="next" id="next-step">Siguiente paso</button></div></div>
+  </section>
+
+  <section class="section" id="shader"><h2>El color como instrucción</h2><p>Puedes reservar determinados colores para que el shader los interprete como instrucciones: codifican un anclaje, una entrada de paleta y un desplazamiento.</p><div class="bit-grid"><div class="bit"><b>R</b><p>Bits altos: anclaje.<br>Bits bajos: color de paleta.</p></div><div class="bit"><b>G</b><p>1 o 2: HUD.<br>3: efectos, en otra ruta.</p></div><div class="bit"><b>B</b><p>HUD: offset vertical.<br>Efectos: tono y flags.</p></div></div>
+  <div class="split"><div><h3>Descodificador del HUD</h3><div class="formula">anchor = R &gt;&gt; 5<br>palette = R &amp; 31<br>offsetY = B − 3<br>G == 2 → color al 25 %</div><p class="figure-caption">Ejemplo de contrato propio entre compositor y shader. Minecraft no impone esta codificación RGB.</p><div class="proof">Si tu compositor envía <code>#03010B</code> con este contrato: R = 3, G = 1, B = 11. Selecciona paleta 3 y offset base de 8; el shader aplica además las correcciones del anclaje.</div></div><div class="panel"><h3>Títulos que activan transiciones</h3><p>Un glifo de la fuente de efectos llega por un título. El shader de fragmentos dibuja el cierre y sus detalles metálicos.</p><div class="transition-box" id="transition-box"><span>Destino de la factoría</span><div class="curtain"></div><div class="curtain bottom"></div></div><div class="btnline"><button class="chip" id="transition-button" aria-pressed="false">Cerrar transición</button><code>text.fsh</code></div><p class="figure-caption">Simulación CSS. En Minecraft el efecto lo calcularía tu shader; alfa/progreso requiere un contrato compatible con la versión.</p></div></div>
+  </section>
+
+  <section class="section" id="funciones"><h2>Qué aporta Minecraft</h2><div class="table-scroll"><table class="feature-table"><thead><tr><th>Función</th><th>Se usa para</th><th>Lo que añade tu sistema</th></tr></thead><tbody>
+  <tr><td>Diálogos</td><td>Pantallas modales y controles</td><td>Layout, navegación, datos y acciones</td></tr><tr><td>Componentes de texto</td><td>Combinar estilos, fuentes y eventos</td><td>Compositor y métricas</td></tr><tr><td>Click personalizado</td><td>Enviar una acción al servidor</td><td>Router, permisos y estado de sesión</td></tr><tr><td>Hover de texto</td><td>Mostrar un tooltip</td><td>Descripción de la acción u objeto</td></tr><tr><td>Fuentes bitmap</td><td>Dibujar una imagen como carácter</td><td>Iconos, paneles y dos estados del toggle</td></tr><tr><td>Espacios y ascent</td><td>Modificar avances y línea base</td><td>Alineación y superposición</td></tr><tr><td>Nombre de bossbar</td><td>Transportar el texto del HUD</td><td>Composición de varios paneles</td></tr><tr><td>Sprites de recursos</td><td>Cambiar la apariencia nativa</td><td>Ocultar la barra blanca con transparencia</td></tr><tr><td>Shaders de texto</td><td>Modificar el dibujo del texto</td><td>Anclajes, paleta y efectos</td></tr><tr><td>Títulos y sonidos</td><td>Presentación durante el juego</td><td>Transiciones y voz de la mascota</td></tr><tr><td>Inputs de diálogos</td><td>Texto, booleano, selección y rango</td><td>Formularios y validación de los datos</td></tr><tr><td>Barra de acción y chat</td><td>Alternativas de presentación</td><td>Fallback cuando se ocultan notificaciones o la mascota</td></tr>
+  </tbody></table></div><p class="figure-caption">Las preferencias entre servidores y las reglas de producción son servicios del servidor. No las implementa una textura ni el shader.</p></section>
+
+  <section class="section" id="construccion"><h2>Cómo construirlo</h2><div class="sequence"><article class="seq"><strong>1</strong><h3>Interacción nativa</h3><p>Diálogo simple, Escape, botón, acción y validación. Después un toggle persistente.</p></article><article class="seq"><strong>2</strong><h3>Composición gráfica</h3><p>Paquete, iconos, fuentes, métricas y zonas clicables. Tooltips y navegación.</p></article><article class="seq"><strong>3</strong><h3>HUD y efectos</h3><p>Bossbar, sprites transparentes y shader de la versión exacta. Luego mascota y transiciones.</p></article><article class="seq"><strong>4</strong><h3>Producto completo</h3><p>Idiomas, formularios, datos de máquinas, persistencia y pruebas de escala, teclado y reconexión.</p></article></div>
+  <div class="source-grid" style="margin-top:30px"><div><h3>Lo que necesitas preparar</h3><ul><li>Una versión exacta de cliente, servidor y API compatibles.</li><li>Un plugin con router de acciones y sesiones por jugador.</li><li>Un paquete propio con imágenes, fuentes, métricas y shaders.</li><li>Persistencia de preferencias y proveedores de datos del juego.</li></ul></div><div><h3>Qué debes comprobar</h3><ul><li>Que cada botón responda en toda su zona visual.</li><li>Que los toggles conserven su estado al reconectar.</li><li>Que el HUD se adapte a varias escalas y tamaños de ventana.</li><li>Que una acción inválida o una transición interrumpida se resuelvan correctamente.</li></ul></div></div></section>
+
+  <section class="section" id="agentes"><h2>Lectura para agentes</h2><p>El resumen técnico reúne los mecanismos, el recorrido de una acción y los límites que afectan a la implementación. Desde él puedes ampliar cada parte en la guía Markdown, sin ejecutar las simulaciones.</p><div class="controls"><a class="chip" href="AGENTS.md">Resumen técnico</a><a class="chip" href="GUIA-INTERFACES-MINECRAFT.md">Guía completa en Markdown</a><a class="chip" href="llms.txt">Índice llms.txt</a><a class="chip" href="llms-full.txt">Texto completo</a></div></section>
+  <section class="section" id="referencia"><h2>Guía completa</h2><div class="search-row"><input id="search" type="search" aria-label="Buscar en la guía" placeholder="Buscar fuentes, toggle, shader…"><button class="chip" id="expand-all">Expandir todo</button><button class="chip" id="collapse-all">Cerrar todo</button></div><p class="search-status" id="search-status" role="status">29 capítulos</p><div id="chapters"><details class="chapter" id="cap-1"><summary>1. Qué vas a construir</summary><div class="chapter-body"><table>
+<thead>
+<tr>
+<th>Funcionalidad</th>
+<th>Función de Minecraft</th>
+<th>Trabajo de tu sistema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Menús</td>
+<td>Diálogos nativos</td>
+<td>Componer pantallas y navegación</td>
+</tr>
+<tr>
+<td>Paneles e iconos</td>
+<td>Fuentes bitmap y texturas</td>
+<td>Crear glifos, métricas y layout</td>
+</tr>
+<tr>
+<td>Botones</td>
+<td>Eventos de clic en componentes</td>
+<td>Enrutar y validar acciones</td>
+</tr>
+<tr>
+<td>Tooltips</td>
+<td>Eventos de hover</td>
+<td>Explicar objetos y acciones</td>
+</tr>
+<tr>
+<td>Interruptores</td>
+<td>Componentes clicables</td>
+<td>Alternar estado y cambiar la imagen</td>
+</tr>
+<tr>
+<td>Formularios</td>
+<td>Inputs nativos de diálogos</td>
+<td>Validar texto, selección y cantidades</td>
+</tr>
+<tr>
+<td>HUD persistente</td>
+<td>Nombre de bossbar</td>
+<td>Componer paneles y actualizar datos</td>
+</tr>
+<tr>
+<td>HUD en diferentes posiciones</td>
+<td>Shader de texto del paquete</td>
+<td>Definir marcadores y anclajes</td>
+</tr>
+<tr>
+<td>Transiciones</td>
+<td>Títulos y shader de fragmentos</td>
+<td>Controlar efecto, progreso y limpieza</td>
+</tr>
+<tr>
+<td>Mascota y notificaciones</td>
+<td>Glifos, texto, sonidos y canales alternativos</td>
+<td>Gestionar mensajes y preferencias</td>
+</tr>
+<tr>
+<td>Idiomas y preferencias</td>
+<td>Texto y componentes</td>
+<td>Traducciones y almacenamiento</td>
+</tr>
+<tr>
+<td>Integración con economía o máquinas</td>
+<td>APIs y servicios del servidor</td>
+<td>Suministrar datos y ejecutar reglas</td>
+</tr>
+</tbody>
+</table>
+<p>Un <strong>diálogo</strong> es una pantalla interactiva que se abre y se cierra. Un <strong>HUD</strong> es información superpuesta mientras juegas. Un <strong>glifo</strong> es la representación visual de un carácter; aquí puede ser un icono o un panel. Un <strong>shader</strong> es un programa de renderizado que puede modificar cómo se dibujan esos elementos.</p>
+</div></details>
+<details class="chapter" id="cap-2"><summary>2. Arquitectura</summary><div class="chapter-body"><pre><code class="language-mermaid">flowchart LR
+    A[Datos y reglas del servidor] --&gt; B[Modelo de pantalla]
+    B --&gt; C[Compositor de componentes]
+    C --&gt; D[Diálogo: menús]
+    C --&gt; E[Nombre de bossbar: HUD]
+    C --&gt; F[Títulos: transiciones]
+    G[Paquete de recursos] --&gt; H[Fuentes y texturas]
+    G --&gt; I[Shaders de texto]
+    D --&gt; J[Cliente Minecraft]
+    E --&gt; J
+    F --&gt; J
+    H --&gt; J
+    I --&gt; J
+    J --&gt; K[Clic personalizado]
+    K --&gt; L[Router y validación]
+    L --&gt; A
+</code></pre>
+<p>Hay dos rutas distintas. Los diálogos ofrecen pantalla modal, interacción y controles; el HUD aprovecha un canal de texto que ya se dibuja durante el juego. El shader transforma la presentación del texto recibido. Las reglas, permisos, recompensas y preferencias viven en el servidor.</p>
+</div></details>
+<details class="chapter" id="cap-3"><summary>3. Elegir y fijar una versión</summary><div class="chapter-body"><p>Los diálogos existen desde Java 1.21.6, pero el formato de recursos, las firmas de los shaders y las APIs de servidor cambian entre versiones. La documentación oficial describe el <a href="https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21-6">formato de diálogos</a>.</p>
+<p>Para un proyecto propio:</p>
+<ol>
+<li>Elegir una versión exacta de Minecraft cliente y servidor.</li>
+<li>Elegir una plataforma con soporte para esa versión. Paper es una opción si dispone de una compilación compatible con la versión que elijas.</li>
+<li>Fijar la versión de la API, del JDK y de las herramientas de compilación.</li>
+<li>Partir de los shaders originales del JAR de esa versión y aplicar cambios pequeños sobre ellos.</li>
+<li>Probar primero con un cliente vanilla y después con las combinaciones de mods gráficos que se quieran soportar.</li>
+</ol>
+<p>Los ejemplos de esta guía son piezas de diseño y configuración. No forman un plugin completo compilado ni un shader universal listo para todas las versiones. Las firmas de API deben contrastarse con el servidor elegido.</p>
+</div></details>
+<details class="chapter" id="cap-4"><summary>4. Estructura del proyecto</summary><div class="chapter-body"><pre><code class="language-text">mi-interfaz/
+├── plugin/
+│   └── src/main/java/.../
+│       ├── UiService.java
+│       ├── UiSession.java
+│       ├── ActionRouter.java
+│       ├── DialogRenderer.java
+│       ├── HudRenderer.java
+│       ├── LayoutComposer.java
+│       ├── GlyphCatalog.java
+│       ├── PreferencesRepository.java
+│       └── ResourcePackService.java
+├── pack/
+│   ├── pack.mcmeta
+│   └── assets/
+│       ├── miui/
+│       │   ├── font/panel.json
+│       │   ├── font/hud.json
+│       │   ├── textures/panel/
+│       │   ├── textures/hud/
+│       │   ├── sounds/
+│       │   └── sounds.json
+│       └── minecraft/
+│           ├── shaders/core/text.vsh
+│           ├── shaders/core/text.fsh
+│           └── textures/gui/sprites/boss_bar/
+│               ├── white_background.png
+│               └── white_progress.png
+├── tools/
+│   └── generate_resources.py
+└── generated/
+    ├── glyphs.json
+    └── layout-metrics.json
+</code></pre>
+<p>Usar un namespace propio, por ejemplo <code>miui</code>. Generar el catálogo de caracteres y sus métricas a partir de una sola fuente evita que el plugin y el paquete asignen imágenes distintas al mismo carácter.</p>
+</div></details>
+<details class="chapter" id="cap-5"><summary>5. Distribuir el paquete de recursos</summary><div class="chapter-body"><p>El ZIP debe contener <code>pack.mcmeta</code> y <code>assets/</code> en su raíz. El <code>pack.mcmeta</code> debe declarar formatos compatibles con la versión objetivo; no copiar un número de formato de otra versión.</p>
+<p>Publicar el ZIP mediante una URL HTTPS de descarga directa. Configuración orientativa en <code>server.properties</code>, sustituyendo los valores:</p>
+<pre><code class="language-properties">resource-pack=https://ejemplo.com/miui/miui-v1.zip
+resource-pack-sha1=HASH_SHA1_REAL_DEL_ZIP
+require-resource-pack=false
+</code></pre>
+<p>El SHA-1 corresponde a los bytes del archivo publicado. Estos campos están documentados en <a href="https://docs.papermc.io/paper/reference/server-properties/">server.properties de Paper</a>.</p>
+<p>Al recibir la confirmación de carga del paquete, activar el HUD gráfico. Si falla o se rechaza, ofrecer una presentación básica con texto y controles nativos. Cambiar a <code>require-resource-pack=true</code> solo si el producto requiere que todos lo carguen. La URL y el hash deben actualizarse de forma coherente en cada publicación.</p>
+<p>En PowerShell se puede calcular el hash con:</p>
+<pre><code class="language-powershell">Get-FileHash -LiteralPath '.\miui-v1.zip' -Algorithm SHA1
+</code></pre>
+</div></details>
+<details class="chapter" id="cap-6"><summary>6. Convertir imágenes en caracteres</summary><div class="chapter-body"><p>Crear una imagen propia, por ejemplo <code>assets/miui/textures/panel/button.png</code>, y registrarla en <code>assets/miui/font/panel.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;providers&quot;: [
+    {
+      &quot;type&quot;: &quot;bitmap&quot;,
+      &quot;file&quot;: &quot;miui:panel/button.png&quot;,
+      &quot;height&quot;: 16,
+      &quot;ascent&quot;: 12,
+      &quot;chars&quot;: [&quot;\ue000&quot;]
+    },
+    {
+      &quot;type&quot;: &quot;space&quot;,
+      &quot;advances&quot;: {
+        &quot;\uf810&quot;: 1,
+        &quot;\uf811&quot;: 2,
+        &quot;\uf812&quot;: 4,
+        &quot;\uf813&quot;: 8,
+        &quot;\uf820&quot;: -1,
+        &quot;\uf821&quot;: -2,
+        &quot;\uf822&quot;: -4,
+        &quot;\uf823&quot;: -8
+      }
+    }
+  ]
+}
+</code></pre>
+<p>El carácter <code>U+E000</code> pasa a representar esa imagen al utilizar la fuente <code>miui:panel</code>. <code>height</code> y <code>ascent</code> controlan tamaño y posición respecto a la línea base. La anchura efectiva depende también de la proporción y del avance del glifo: hay que medirla, no suponer que coincide exactamente con la anchura del PNG.</p>
+<p>Ejemplo de componente de texto, sin interacción:</p>
+<pre><code class="language-json">{
+  &quot;text&quot;: &quot;\ue000&quot;,
+  &quot;font&quot;: &quot;miui:panel&quot;,
+  &quot;color&quot;: &quot;white&quot;,
+  &quot;shadow_color&quot;: 0
+}
+</code></pre>
+<p><code>shadow_color</code> y el resto de los campos deben verificarse en la versión objetivo. Utilizar sombra cero en los glifos gráficos evita que la imagen se duplique visualmente.</p>
+</div></details>
+<details class="chapter" id="cap-7"><summary>7. Composición y posición</summary><div class="chapter-body"><p>Un componente puede dibujar un fondo grande; un espacio negativo devuelve el cursor hacia el inicio y permite superponer otros elementos. Los espacios positivos lo desplazan a la siguiente columna.</p>
+<pre><code class="language-text">glifo del fondo
+movimiento negativo hasta el origen
+desplazamiento hasta el icono + glifo del icono
+desplazamiento hasta la etiqueta + texto
+salto de línea y siguiente fila
+</code></pre>
+<p>Crear una función <code>moveX(n)</code> que descomponga el desplazamiento en caracteres de 1, 2, 4, 8, 16, 32… píxeles positivos o negativos. Registrar suficientes tamaños en la fuente.</p>
+<p>Para el eje vertical, combinar saltos de línea y variantes de fuentes con distintos valores de <code>ascent</code>. Puedes definir variantes <code>d1</code> a <code>d8</code> para distintas posiciones del texto. No constituyen un sistema libre de coordenadas: el compositor sigue sujeto al layout del diálogo.</p>
+<p>Guardar métricas de cada glifo y texto. Contar letras no basta para calcular anchuras: influyen fuente, caracteres, negrita, idioma y escala de interfaz.</p>
+</div></details>
+<details class="chapter" id="cap-8"><summary>8. Crear un diálogo</summary><div class="chapter-body"><p>Primero probar un diálogo simple con texto y cierre, sin imágenes ni shader. Un esquema de definición es:</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;minecraft:notice&quot;,
+  &quot;title&quot;: &quot;Demostración&quot;,
+  &quot;can_close_with_escape&quot;: true,
+  &quot;pause&quot;: false,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;minecraft:plain_message&quot;,
+      &quot;contents&quot;: {&quot;text&quot;: &quot;Aquí irá el panel compuesto.&quot;},
+      &quot;width&quot;: 460
+    }
+  ],
+  &quot;action&quot;: {&quot;label&quot;: &quot;Cerrar&quot;}
+}
+</code></pre>
+<p>La ubicación y el registro de esta definición dependen de si se crea mediante datapack, API o valor inline. El comando <code>/dialog show &lt;jugador&gt; &lt;id&gt;</code> requiere que exista ese diálogo y permisos adecuados.</p>
+<p>En una implementación de servidor, generar dinámicamente el cuerpo desde el estado del jugador. La API de Paper ofrece construcción y presentación de diálogos; consultar sus <a href="https://docs.papermc.io/paper/dev/dialogs/">referencias de diálogo</a>.</p>
+<p>Para un menú gráfico puedes usar un <code>PlainMessage</code> de ancho 460, con componentes, y configurar el comportamiento posterior a una acción para mantener o reemplazar el diálogo según el flujo. El ancho es una decisión del layout, no una constante obligatoria. Para empezar conviene conservar un título visible y un cierre nativo; ocultar o minimizar controles requiere pruebas de teclado, foco y Escape.</p>
+</div></details>
+<details class="chapter" id="cap-9"><summary>9. Botones y zonas clicables</summary><div class="chapter-body"><p>Un botón gráfico puede ser un componente formado por imagen y etiqueta. Ambos llevan la misma acción para que al pulsar cualquiera se obtenga el mismo resultado.</p>
+<p>Este esquema representa una tarjeta que abre las misiones:</p>
+<pre><code class="language-text">componente:
+  contenido: icono o etiqueta
+  fuente: miui:panel
+  clickEvent:
+    tipo: custom
+    identificador: miui:panel
+    payload:
+      action: menu.open_missions
+      generation: 1
+</code></pre>
+<p>Este bloque es pseudocódigo; no es JSON para pegar directamente en un datapack. Usar el constructor de componentes/clics disponible en la API de la versión elegida.</p>
+<p>Para un sistema propio, elegir <code>miui:panel</code> como identificador y acciones como <code>menu.open_missions</code>. Los clics llegan a un router que valida la sesión y llama a una función explícita. Evitar convertir el texto recibido en un comando arbitrario.</p>
+<p>La zona interactiva corresponde al layout del componente. Si un dibujo se extiende fuera de su caja o se desplaza mediante shader, no asumir que la zona clicable lo sigue. Medir los límites, añadir espacios de avance positivo con el evento si hacen falta y verificar el centro y los bordes. Una textura transparente por sí sola no garantiza una zona clicable.</p>
+</div></details>
+<details class="chapter" id="cap-10"><summary>10. Tooltips al pasar el ratón</summary><div class="chapter-body"><p>El componente puede llevar un evento <code>hoverEvent</code> de tipo <code>show_text</code>, independientemente de su clic. Ejemplo de esquema de componente:</p>
+<pre><code class="language-json">{
+  &quot;text&quot;: &quot;Economía&quot;,
+  &quot;hover_event&quot;: {
+    &quot;action&quot;: &quot;show_text&quot;,
+    &quot;value&quot;: {&quot;text&quot;: &quot;Abre tu saldo y operaciones disponibles.&quot;}
+  }
+}
+</code></pre>
+<p>La estructura de eventos JSON ha cambiado entre versiones; usar el serializador de la API seleccionada y comprobar el resultado en el cliente objetivo.</p>
+<p>Minecraft muestra el tooltip al detectar el ratón sobre el componente. No requiere enviar continuamente la posición del ratón al servidor. Puedes utilizar tooltips como «Abrir: Economía», además de información de saldo y ajustes.</p>
+<p>Hacer que las acciones esenciales sean comprensibles mediante su etiqueta, no solo mediante hover. Comprobar contraste, longitud y saltos de línea de las descripciones.</p>
+</div></details>
+<details class="chapter" id="cap-11"><summary>11. Toggles y estado</summary><div class="chapter-body"><p>Define dos imágenes y asígnalas a dos caracteres con una acción compartida:</p>
+<table>
+<thead>
+<tr>
+<th>Estado</th>
+<th>Archivo</th>
+<th>Carácter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Activado</td>
+<td><code>miui:panel/hud/switch_on.png</code></td>
+<td><code>U+F196</code></td>
+</tr>
+<tr>
+<td>Desactivado</td>
+<td><code>miui:panel/hud/switch_off.png</code></td>
+<td><code>U+F1A0</code></td>
+</tr>
+</tbody>
+</table>
+<p>Flujo de implementación:</p>
+<pre><code class="language-text">El jugador pulsa el interruptor
+→ cliente envía acción miui:panel con toggle_player_hud
+→ servidor valida jugador, sesión y generación
+→ actualiza su preferencia
+→ actualiza el nombre de la bossbar
+→ reconstruye el diálogo con la imagen del nuevo estado
+→ persiste el cambio
+</code></pre>
+<p>El valor visual procede del estado confirmado por el servidor. Para evitar clics repetidos sobre pantallas antiguas, incrementar la generación de sesión al renderizar y rechazar acciones desfasadas. Incluye un campo <code>generation</code> en la acción y contrástalo con la sesión actual antes de procesarla.</p>
+<p>Un control deshabilitado debe llevar estilo visual distinto, explicación y ninguna acción activa. El servidor también debe rechazar la operación si no está permitida, aunque el cliente envíe una solicitud.</p>
+</div></details>
+<details class="chapter" id="cap-12"><summary>12. Formularios y otros controles</summary><div class="chapter-body"><p>Los diálogos ofrecen controles nativos para texto, booleanos, selección y rango numérico. Consultar el esquema y la API de la versión concreta antes de construirlos.</p>
+<p>Usarlos para búsqueda, cantidades, filtros o nombres. Mantenerlos nativos al principio: permiten capturar entrada sin construir un editor de texto propio a base de glifos. Un interruptor dibujado como imagen no incorpora automáticamente las funciones de un control booleano nativo.</p>
+<p>En el servidor, validar longitudes, rangos y opciones admitidas; resolver los precios y permisos desde el estado actual. Los datos que vuelve a enviar el cliente no son una fuente autorizada para saldos, propietarios ni recompensas.</p>
+</div></details>
+<details class="chapter" id="cap-13"><summary>13. Navegación, paginación y refresco</summary><div class="chapter-body"><p>Guardar por jugador una sesión de interfaz:</p>
+<pre><code class="language-text">UiSession:
+  screenId
+  previousScreenId
+  page
+  filters
+  generation
+  lastActionTime
+</code></pre>
+<p>Resolver <code>back</code>, <code>exit</code>, cambio de pestaña y de página desde esa sesión. Una página nueva debe mantener filtros y selección cuando tenga sentido. Los listados necesitan un tamaño máximo y un estado vacío.</p>
+<p>Al cambiar un ajuste, renderizar una nueva versión del diálogo. No reenviar toda la pantalla cada tick: actualizar cuando cambie un dato relevante o con una cadencia limitada si muestra información dinámica. Presenta los ajustes con el estado actualizado y una confirmación cuando aporte información útil.</p>
+</div></details>
+<details class="chapter" id="cap-14"><summary>14. Un router de acciones en el servidor</summary><div class="chapter-body"><p>Pseudocódigo independiente de una API concreta:</p>
+<pre><code class="language-java">void handleCustomClick(Player player, UiAction action) {
+    UiSession session = sessions.get(player.id());
+    if (session == null || action.generation() != session.generation()) return;
+    if (!rateLimiter.allow(player.id(), action.id())) return;
+
+    switch (action.id()) {
+        case &quot;menu.open_missions&quot; -&gt; openMissions(player);
+        case &quot;hud.toggle_player&quot; -&gt; {
+            preferences.togglePlayerHud(player.id());
+            refreshHud(player);
+            openHudSettings(player);
+        }
+        case &quot;menu.close&quot; -&gt; closeUi(player);
+        default -&gt; recordUnknownAction(player.id(), action.id());
+    }
+}
+</code></pre>
+<p>Este ejemplo es pseudocódigo: <code>Player</code>, <code>UiAction</code> y los servicios se sustituyen por clases propias o las de la plataforma. Ejecutar cambios del mundo y operaciones de API en el hilo o región que exija el servidor; realizar la persistencia sin bloquear ese hilo.</p>
+<p>Separar acciones de interfaz y operaciones de negocio. Una recompensa se reclama mediante un servicio idempotente que evita duplicados, no añadiendo monedas directamente desde cada componente clicable.</p>
+</div></details>
+<details class="chapter" id="cap-15"><summary>15. Crear el HUD mediante una bossbar</summary><div class="chapter-body"><p>Una bossbar contiene un nombre que puede ser un componente de texto. Compón en ese nombre los paneles de tu interfaz, con gráficos, valores y marcadores de posición.</p>
+<pre><code class="language-text">nombre de la bossbar:
+  fondo de factoría + nombre + nivel + objetivo
+  fondo de jugador + rango + monedas + cápsulas
+  robot + bocadillo + texto
+  potenciadores + tiempos restantes
+</code></pre>
+<p>Crear una bossbar por sesión/jugador y actualizar su nombre cuando cambia la composición. No crear una barra nueva en cada actualización. Al salir, retirar la barra y liberar sus referencias.</p>
+<p>Empieza con una sola bossbar de transporte. Añade otras únicamente si existe una necesidad de composición o de límites del canal que hayas medido.</p>
+<p>La bossbar ofrece el transporte de texto. <strong>No ofrece coordenadas libres para un HUD completo</strong>: esa parte procede del compositor y del shader.</p>
+</div></details>
+<details class="chapter" id="cap-16"><summary>16. Hacer invisible la barra estándar</summary><div class="chapter-body"><p>Para ocultar una barra blanca, sustituye estas imágenes por sprites totalmente transparentes en tu paquete:</p>
+<pre><code class="language-text">assets/minecraft/textures/gui/sprites/boss_bar/white_background.png
+assets/minecraft/textures/gui/sprites/boss_bar/white_progress.png
+</code></pre>
+<p>Como referencia, en Minecraft 26.3 ambas miden 182 × 5 píxeles; contrasta las dimensiones con el JAR de tu versión. Al usar una bossbar blanca, se ocultan sus gráficos estándar y permanece el nombre que utiliza el HUD.</p>
+<p>Para un proyecto propio, crear sprites transparentes con las dimensiones y rutas que utilice la versión objetivo y reservar ese color para el HUD. Este reemplazo afecta también a otras bossbars blancas del cliente: coordinarlo con jefes y otros plugins. Las variantes con muescas pueden tener sprites adicionales; no suponer que dos texturas cubren todos los estilos.</p>
+</div></details>
+<details class="chapter" id="cap-17"><summary>17. Reposicionar el HUD con el shader de texto</summary><div class="chapter-body"><p>El recurso <code>assets/minecraft/shaders/core/text.vsh</code> modifica las posiciones de los vértices del texto antes de dibujarlos. Puedes reservar determinados valores RGB como un pequeño protocolo entre tu compositor y el shader.</p>
+<p>Propuesta de contrato para el ejemplo de esta guía; no es un protocolo nativo de Minecraft:</p>
+<pre><code class="language-text">G = 1 o 2              → componente marcado como parte del HUD
+anchor = R &gt;&gt; 5        → grupo/anclaje
+palette = R &amp; 31       → color final de una paleta de 18 colores
+B                      → desplazamiento vertical, con corrección -3
+G = 2                  → variante oscurecida al 25 %
+</code></pre>
+<p>Los colores recibidos son instrucciones; el shader calcula el color visible desde su paleta. Por ejemplo, el compositor puede asignar <code>#03010B</code> al nombre de una factoría: el canal verde activa esta ruta, los bits bajos de rojo eligen una entrada de paleta y azul participa en el desplazamiento.</p>
+<p>Esquema de modificación, <strong>no shader GLSL completo</strong>:</p>
+<pre><code class="language-text">position = Position
+color = Color
+
+si color cumple el marcador reservado del HUD:
+    calcular tamaño lógico desde la matriz de proyección
+    descodificar anclaje y paleta
+    aplicar corrección de origen del canal bossbar
+    desplazar position al anclaje y offset deseados
+    sustituir color por el de la paleta
+
+continuar con la transformación original de Minecraft
+</code></pre>
+<p>Tomar como base el shader de la versión real y preservar sus imports, entradas, salidas, variantes y fases de renderizado. Si necesitas varias versiones, mantén variantes mediante overlays o publica paquetes separados; compila y prueba cada shader con su versión objetivo.</p>
+<p>Reservar los colores marcadores para la interfaz y evitar que textos normales los utilicen accidentalmente. Probar texto de chat, nombres de entidades y objetos además del HUD para detectar efectos colaterales.</p>
+</div></details>
+<details class="chapter" id="cap-18"><summary>18. Adaptar el HUD al tamaño de pantalla</summary><div class="chapter-body"><p>Usar el tamaño lógico de GUI, no únicamente la resolución física. Tener en cuenta la escala de interfaz configurada por el jugador.</p>
+<p>Calcula anchura y altura lógicas desde la matriz de proyección. Define anclajes para los bordes y reglas que reposicionen la mascota y su bocadillo cuando no haya espacio, incluyendo una variante de la cola del bocadillo si cambia de orientación.</p>
+<p>Definir reglas propias para ventanas pequeñas: reducir contenido, trasladar un panel o esconder elementos opcionales. No resolver todas las situaciones reduciendo la letra. Probar también el inventario, diálogos abiertos, chat y lista de jugadores.</p>
+<p>La posición visual modificada por el shader no implica una zona de clic nueva en pantalla. Diseñar el HUD como informativo; usar los diálogos para las interacciones con cursor. Las bossbars no aportan por sí mismas botones o tooltips utilizables durante el juego normal.</p>
+</div></details>
+<details class="chapter" id="cap-19"><summary>19. Barras, estadísticas y progreso</summary><div class="chapter-body"><p>Construir barras a partir de imágenes de borde, relleno y espacio vacío. Un catálogo útil puede incluir segmentos activos/inactivos de tamaños 1, 2, 4, 8, 16, 32, 64 y 128.</p>
+<pre><code class="language-text">fracción = limitar(actual / máximo, 0, 1)
+relleno = redondear(anchura * fracción)
+vacío = anchura - relleno
+resultado = bordeIzquierdo + segmentos(relleno) + segmentosVacíos(vacío) + bordeDerecho
+</code></pre>
+<p>Tratar <code>máximo &lt;= 0</code> como un caso explícito. Cuantizar el resultado a los tamaños que realmente soporte el catálogo; incluir segmentos pequeños si se necesita más resolución. Mostrar también cantidades como <code>12/32</code>, porque el color y la barra no deben ser la única forma de comprender el valor.</p>
+</div></details>
+<details class="chapter" id="cap-20"><summary>20. Mascota, escritura y sonido</summary><div class="chapter-body"><p>Separar cuerpo, bocadillo, cola y texto. Mantener una cola de mensajes con prioridad y duración. El efecto de escritura se consigue enviando sucesivas versiones del texto; hacerlo a una frecuencia controlada, no con una actualización por glifo en cada tick para todos los jugadores.</p>
+<p>Enviar sonidos mediante el mecanismo de sonidos del juego y definir los propios en el paquete si son necesarios. Permitir desactivar voz, reacciones y mascota por separado. Al ocultar la mascota, puedes derivar sus mensajes al chat para conservar la información.</p>
+<p>Configura la cadencia y la prioridad de los mensajes desde un servicio dedicado a la mascota.</p>
+</div></details>
+<details class="chapter" id="cap-21"><summary>21. Notificaciones y alternativas</summary><div class="chapter-body"><p>Modelar notificaciones con identificador, prioridad, tiempo de expiración y datos. Mostrar un número limitado para evitar que se pisen entre sí.</p>
+<p>Al ocultar las notificaciones gráficas, puedes mostrar los mensajes de las máquinas en la barra de acción. Implementa esa separación: mensaje semántico único y varias presentaciones posibles, elegidas por preferencias o por disponibilidad del paquete.</p>
+<p>Un canal puede estar ocupado por otro plugin. Coordinar qué servicio posee cada bossbar, título y barra de acción para que no se sobrescriban mutuamente.</p>
+</div></details>
+<details class="chapter" id="cap-22"><summary>22. Transiciones de pantalla</summary><div class="chapter-body"><p>Envía un glifo de <code>miui:fx</code> por el canal de títulos y reserva otra familia de marcadores para los efectos. Por ejemplo, <code>#020300</code> puede seleccionar el efecto 2 con el siguiente contrato de tu shader:</p>
+<pre><code class="language-text">G = 3          → ruta de efectos
+R              → tipo de efecto
+B              → tono y flags
+alpha          → progreso cuando esa ruta lo utiliza
+</code></pre>
+<p>Puedes implementar fundido, cierre circular, placas que se juntan y barrido lateral. El shader de fragmentos también puede generar franjas, biseles y grano mediante cálculo de píxeles.</p>
+<p>Para reproducirlo, definir primero un fundido con un glifo que cubra la pantalla y una duración corta. Encadenar inicio, operación/teletransporte y apertura. Implementar cancelación y tiempo máximo: un error no debe dejar un overlay opaco permanente.</p>
+<p>La forma de controlar alfa/progreso desde el servidor depende de la API y versión. Mantener un contrato explícito; no suponer que un color hexadecimal convencional transmite alfa. Conservar una opción de movimiento reducido y una alternativa sin efectos.</p>
+</div></details>
+<details class="chapter" id="cap-23"><summary>23. Idiomas y preferencias persistentes</summary><div class="chapter-body"><p>Usar claves de traducción propias para etiquetas, tooltips, errores y notificaciones. Reservar anchura según el idioma más largo admitido y probar acentos, caracteres no latinos y nombres de jugadores.</p>
+<p>Modelo orientativo:</p>
+<pre><code class="language-text">PlayerPreferences:
+  playerUuid
+  language
+  playerHudVisible
+  factoryHudVisible
+  objectivesVisible
+  notificationsVisible
+  boostersVisible
+  mascotVisible
+  mascotVoiceEnabled
+  mascotReactionsEnabled
+  reducedMotion
+  schemaVersion
+</code></pre>
+<p>En un único servidor puede bastar una base local. Para varios servidores, usar persistencia compartida y un mecanismo de actualización o recarga al cambiar de nodo. El idioma de la interfaz y el filtrado de idiomas del chat son preferencias distintas; no mezclarlas.</p>
+</div></details>
+<details class="chapter" id="cap-24"><summary>24. Conectar máquinas y otros sistemas de juego</summary><div class="chapter-body"><p>La interfaz consume una instantánea del modelo de negocio:</p>
+<pre><code class="language-text">MachineView:
+  id, owner, type
+  powered, state
+  inputRate, outputRate
+  progress, progressMaximum
+  availableActions
+</code></pre>
+<p>Representar esa instantánea mediante el mismo compositor de diálogos y HUD. Resolver otra vez permisos y estado al ejecutar una acción, porque pueden cambiar después de abrir la pantalla.</p>
+<p>Para representar máquinas en el mundo puedes diseñar una integración con entidades de visualización y objetos con modelos personalizados, verificando sus límites e interacción en la versión objetivo. Tampoco el HUD implementa automáticamente electricidad, cintas o producción: son servicios independientes del servidor.</p>
+</div></details>
+<details class="chapter" id="cap-25"><summary>25. Rendimiento y ciclo de vida</summary><div class="chapter-body"><ul>
+<li>Guardar por jugador la última composición enviada y no reenviarla si no cambió.</li>
+<li>Separar contenido estático de estadísticas dinámicas; cachear fondos, etiquetas y métricas.</li>
+<li>Limitar frecuencia de contadores, escritura de la mascota y animaciones.</li>
+<li>Evitar recrear bossbars y sesiones cada tick.</li>
+<li>Retirar referencias, tareas, barras y callbacks al salir el jugador o detenerse el plugin.</li>
+<li>Limitar tamaño de textos, payloads y listas, y comprobar las restricciones de la versión.</li>
+<li>Usar identificadores de entidad/jugador en tareas persistentes en vez de conservar objetos grandes indefinidamente.</li>
+</ul>
+<p>La medición debe incluir CPU del servidor, volumen de actualizaciones, tamaño de paquetes y coste gráfico en un cliente modesto. El recurso de fuentes puede ocupar atlas grandes; miles de variantes no son gratis.</p>
+</div></details>
+<details class="chapter" id="cap-26"><summary>26. Orden de construcción</summary><div class="chapter-body"><ol>
+<li>Fijar versión y arrancar un servidor de desarrollo con cliente vanilla.</li>
+<li>Crear un diálogo con texto, botón nativo y cierre por Escape.</li>
+<li>Recibir una acción y confirmar que solo afecta al jugador correcto.</li>
+<li>Cargar un paquete propio con un icono y una fuente.</li>
+<li>Construir una tarjeta con icono, etiqueta, tooltip y clic.</li>
+<li>Añadir un interruptor y persistir su estado al reconectar.</li>
+<li>Crear un compositor con desplazamientos medidos y probar varias escalas de GUI.</li>
+<li>Enviar un HUD básico por una bossbar con texto visible.</li>
+<li>Ocultar sus sprites y añadir el shader de posicionamiento para esa versión.</li>
+<li>Incorporar panel de jugador, factoría, objetivo y barras de progreso.</li>
+<li>Añadir preferencias, mascota, notificaciones e idiomas.</li>
+<li>Añadir formularios y navegación entre pantallas.</li>
+<li>Implementar primero un fundido y después transiciones más complejas.</li>
+<li>Integrar servicios de juego y probar reconexión, cambios de mundo y cambio de servidor.</li>
+</ol>
+<p>Cada fase debe funcionar antes de añadir la siguiente. Así se puede localizar si un fallo proviene del servidor, del componente de texto, de la fuente o del shader.</p>
+</div></details>
+<details class="chapter" id="cap-27"><summary>27. Verificación y problemas frecuentes</summary><div class="chapter-body"><table>
+<thead>
+<tr>
+<th>Síntoma</th>
+<th>Revisar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aparece un cuadrado en vez del icono</td>
+<td>Paquete cargado, namespace, fuente y carácter registrado</td>
+</tr>
+<tr>
+<td>Se ve el icono pero no responde al ratón</td>
+<td>Evento del componente, anchura efectiva y caja de interacción</td>
+</tr>
+<tr>
+<td>El clic falla tras un refresco</td>
+<td>Generación de sesión, identificador de acción y estado del servidor</td>
+</tr>
+<tr>
+<td>El toggle cambia pero vuelve atrás</td>
+<td>Persistencia, carrera entre actualizaciones y fuente autorizada del estado</td>
+</tr>
+<tr>
+<td>Se ve una bossbar normal</td>
+<td>Color/estilo elegido, sprites sustituidos y paquete realmente activo</td>
+</tr>
+<tr>
+<td>El HUD se queda arriba como texto</td>
+<td>Marcadores RGB, shader elegido y compatibilidad de versión</td>
+</tr>
+<tr>
+<td>Texto normal aparece desplazado</td>
+<td>Colisión con los colores marcadores o condición demasiado amplia del shader</td>
+</tr>
+<tr>
+<td>El HUD se corta</td>
+<td>Tamaño lógico, escala GUI, anchuras y límites del canal utilizado</td>
+</tr>
+<tr>
+<td>Un botón gráfico y su clic no coinciden</td>
+<td>Desplazamiento visual frente al layout usado para detectar el ratón</td>
+</tr>
+<tr>
+<td>La pantalla parpadea</td>
+<td>Reenvíos completos innecesarios y dos servicios compitiendo por el mismo canal</td>
+</tr>
+<tr>
+<td>Se queda una transición opaca</td>
+<td>Limpieza, cancelación y tiempo máximo del efecto</td>
+</tr>
+<tr>
+<td>Funciona sin mods y falla con un mod gráfico</td>
+<td>Reemplazo de shaders, renderizador y variantes incompatibles</td>
+</tr>
+</tbody>
+</table>
+<p>Pruebas de aceptación: ratón y teclado, Escape y cierre, botones en sus bordes, toggle tras reconexión, dos jugadores con preferencias distintas, varios tamaños de ventana, paquete rechazado, idioma largo, cambio de servidor y jefe real con bossbar coexistiendo.</p>
+</div></details>
+<details class="chapter" id="cap-28"><summary>28. Diagnosticar tu implementación</summary><div class="chapter-body"><p>Introduce observabilidad desde el principio:</p>
+<table>
+<thead>
+<tr>
+<th>Capa</th>
+<th>Qué registrar</th>
+<th>Qué comprobar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sesión</td>
+<td>Jugador, pantalla, generación y acción</td>
+<td>Que las acciones antiguas se rechacen</td>
+</tr>
+<tr>
+<td>Diálogo</td>
+<td>Tipo, componentes y acciones serializadas</td>
+<td>Fuente, ancho, clic y hover correctos</td>
+</tr>
+<tr>
+<td>HUD</td>
+<td>Nombre de bossbar y cambios de contenido</td>
+<td>Que solo cambien los grupos necesarios</td>
+</tr>
+<tr>
+<td>Recursos</td>
+<td>Versión del paquete, hash y estado de carga</td>
+<td>Que el cliente use la versión publicada</td>
+</tr>
+<tr>
+<td>Shader</td>
+<td>Errores de compilación y variantes</td>
+<td>Que el texto normal conserve su renderizado</td>
+</tr>
+</tbody>
+</table>
+<p>Empieza registrando en el propio plugin los componentes que envía. Si usas un cliente de diagnóstico, registra únicamente los canales necesarios y recuerda que un sondeo puede omitir estados muy breves. Prueba primero sin otros plugins de interfaz y reincorpóralos uno a uno.</p>
+<p>Para reproducir un fallo, conserva la versión exacta del cliente, servidor y paquete, la escala de GUI, la pantalla abierta y la acción realizada. Mantén una escena de prueba con botones, textos largos, barras y un cambio de mundo. Desactiva la captura al finalizar la investigación.</p>
+</div></details>
+<details class="chapter" id="cap-29"><summary>29. Alcance y referencias</summary><div class="chapter-body"><p>Esta guía ofrece una arquitectura y un orden de implementación. Los ejemplos son piezas de configuración y pseudocódigo; deben integrarse, compilarse y probarse en tu servidor. Los marcadores RGB, nombres de acción, anclajes y caracteres privados son decisiones de tu aplicación, no convenciones impuestas por Minecraft.</p>
+<p>Fuentes primarias para contrastar la plataforma:</p>
+<ul>
+<li><a href="https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21-6">Mojang: Java Edition 1.21.6 y diálogos</a>.</li>
+<li><a href="https://docs.papermc.io/paper/dev/dialogs/">Paper: API de diálogos</a>.</li>
+<li><a href="https://docs.papermc.io/adventure/">Paper: Adventure, componentes y canales de presentación</a>.</li>
+<li><a href="https://docs.papermc.io/paper/reference/server-properties/">Paper: configuración de paquetes del servidor</a>.</li>
+</ul>
+<p>Consulta los shaders, sprites y formatos originales del JAR de la versión que vayas a soportar. Una apariencia idéntica en dos versiones no garantiza que sus shaders sean intercambiables.</p>
+</div></details></div></section>
+  <footer><span>HTML autónomo · Recursos y simulaciones locales</span><a href="GUIA-INTERFACES-MINECRAFT.md">Guía en Markdown</a><a href="#arquitectura">Volver al esquema</a></footer>
+</main></div>
+<script>
+'use strict';
+const descriptions={
+state:['Datos y reglas','El servidor mantiene el estado autorizado: saldo, nivel, progreso y permisos. La interfaz representa esos datos; una imagen de máquina no implementa por sí sola la producción.','estado → modelo de pantalla'],
+router:['Router de acciones','Recibe el clic personalizado, identifica al jugador y valida sesión, permisos y estado. Después ejecuta una operación y solicita el nuevo renderizado.','miui:panel → acción → validación'],
+composer:['Compositor','Combina textos, glifos, desplazamientos y eventos. Sus métricas sitúan imágenes y etiquetas dentro del layout de Minecraft.','modelo + catálogo de glifos → componentes'],
+dialog:['Diálogos','Ofrecen una pantalla modal. Puedes construir un NoticeDialog con un bloque de texto gráfico que incorpore eventos de clic y hover.','NoticeDialog → PlainMessage → componentes'],
+bossbar:['Nombre de bossbar','Usa el nombre como transporte de componentes del HUD: jugador, progreso o mensajes. Tu shader distribuye esos grupos por la pantalla.','BossEvent.name → fuente miui:hud'],
+title:['Títulos','Puedes enviar un glifo de la fuente miui:fx con un color reservado. Tu shader de fragmentos interpreta ese marcador para dibujar una transición.','title → glifo + marcador → efecto'],
+pack:['Paquete de recursos','Aporta imágenes, fuentes bitmap, espacios personalizados y shaders. Los sprites blancos de bossbar son transparentes para que no aparezca la barra normal.','assets/<namespace>/ + assets/minecraft/'],
+render:['Cliente y shaders','Minecraft procesa los componentes. El vertex shader modifica posiciones y colores del HUD; el fragment shader puede generar efectos. La lógica de juego sigue en el servidor.','text.vsh: posición · text.fsh: píxel']};
+document.querySelectorAll('.node').forEach(node=>{const activate=()=>{document.querySelectorAll('.node').forEach(n=>{n.classList.remove('active');n.setAttribute('aria-pressed','false')});node.classList.add('active');node.setAttribute('aria-pressed','true');const [title,description,code]=descriptions[node.dataset.node];document.getElementById('node-title').textContent=title;document.getElementById('node-description').textContent=description;document.getElementById('node-code').textContent=code};node.addEventListener('click',activate);node.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate()}})});
+const layerTexts={native:['El nombre viaja por una bossbar','Sin la presentación personalizada verías una barra nativa y texto o caracteres especiales. Esta vista separa el transporte de su apariencia.'],pack:['Los glifos forman el panel','La fuente cambia los caracteres por imágenes y los sprites transparentes ocultan la barra blanca. Esta etapa ilustra el aspecto antes de distribuir los grupos con el shader.'],shader:['El shader recoloca los grupos','La bossbar sigue siendo el canal. El shader interpreta marcadores RGB y dibuja cada fragmento en su anclaje de pantalla.']};
+document.querySelectorAll('[data-stage].chip').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-stage].chip').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));document.getElementById('world').dataset.stage=b.dataset.stage;document.getElementById('layer-title').textContent=layerTexts[b.dataset.stage][0];document.getElementById('layer-description').textContent=layerTexts[b.dataset.stage][1];updateHud()}));
+function updateHud(){const visible=document.getElementById('hud-toggle').getAttribute('aria-checked')==='true';const world=document.getElementById('world');world.classList.toggle('hide-factory',!visible);document.getElementById('hud-state').textContent=world.dataset.stage==='shader'?(visible?'Visible en la composición del HUD.':'El servidor omite el panel al componer el nombre de la bossbar.'):'El interruptor se refleja en la vista «Con shader».'}
+document.getElementById('hud-toggle').addEventListener('click',function(){this.setAttribute('aria-checked',String(this.getAttribute('aria-checked')!=='true'));updateHud()});
+let step=0,enabled=true,target=false,generation=1;
+function renderStep(){const text=[
+['Jugador pulsa el componente gráfico.\n\nLa imagen y la etiqueta pueden compartir\nla misma acción personalizada.','La zona clicable depende del layout del texto. Mover píxeles con un shader no crea una zona de clic nueva.'],
+['canal: miui:panel\nacción: hud.toggle_player\ngeneración: '+generation+'\n\nDestino solicitado: '+(target?'activado':'desactivado'),'El cliente envía una acción y sus datos. El servidor no debe confiar en un saldo o permiso aportado por el cliente.'],
+['validar jugador\nvalidar sesión y generación\ncomprobar permisos\nlimitar frecuencia de acciones','La generación permite invalidar una pantalla antigua. Rechaza la acción si no corresponde a la sesión actual del jugador.'],
+['playerHudVisible = '+target+'\nactualizar composición del HUD\npersistir preferencia','El servidor cambia el estado autorizado. Los datos de juego y las preferencias viven fuera de las imágenes.'],
+['nuevo diálogo\nimagen: '+(target?'switch_on.png':'switch_off.png')+'\ncarácter asignado: '+(target?'U+F196':'U+F1A0')+'\nactualizar bossbar si cambia el HUD','El cliente recibe la nueva representación. El toggle muestra el estado confirmado por el servidor.']
+];document.querySelectorAll('.step').forEach((b,i)=>{b.setAttribute('aria-pressed',String(i===step));b.classList.toggle('done',i<step)});document.getElementById('trace-code').textContent=text[step][0];document.getElementById('trace-description').textContent=text[step][1];document.getElementById('next-step').textContent=step===4?'Reiniciar recorrido':'Siguiente paso'}
+function showStep(i){step=i;renderStep()}
+document.querySelectorAll('.step').forEach(b=>b.addEventListener('click',()=>showStep(Number(b.dataset.step))));
+document.getElementById('next-step').addEventListener('click',()=>showStep((step+1)%5));
+document.getElementById('demo-toggle').addEventListener('click',function(){target=!enabled;enabled=target;generation++;this.setAttribute('aria-checked',String(enabled));document.getElementById('toggle-status').textContent='Estado confirmado: '+(enabled?'activado. Glifo U+F196 → switch_on.png.':'desactivado. Glifo U+F1A0 → switch_off.png.');showStep(4)});
+document.getElementById('economy-button').addEventListener('click',()=>{document.getElementById('toggle-status').textContent='Acción ilustrativa: menu.open_economy enviada por el componente. No se realiza ninguna operación económica.'});
+document.getElementById('transition-button').addEventListener('click',function(){const closed=document.getElementById('transition-box').classList.toggle('closed');this.setAttribute('aria-pressed',String(closed));this.textContent=closed?'Abrir transición':'Cerrar transición'});
+const chapters=[...document.querySelectorAll('.chapter')];const normalize=s=>s.toLocaleLowerCase('es').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+document.getElementById('search').addEventListener('input',function(){const term=normalize(this.value.trim());let shown=0;chapters.forEach(c=>{const found=!term||normalize(c.textContent).includes(term);c.hidden=!found;if(term&&found)c.open=true;else if(!term)c.open=false;if(found)shown++});document.getElementById('search-status').textContent=shown+' de '+chapters.length+' capítulos'});
+document.getElementById('expand-all').addEventListener('click',()=>chapters.filter(c=>!c.hidden).forEach(c=>c.open=true));document.getElementById('collapse-all').addEventListener('click',()=>chapters.forEach(c=>c.open=false));
+if('IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>{for(const e of entries)if(e.isIntersecting){document.querySelectorAll('.rail nav a').forEach(a=>{if(a.hash==='#'+e.target.id)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')})}},{rootMargin:'-10% 0px -65% 0px'});document.querySelectorAll('main>section').forEach(s=>observer.observe(s))}
+window.addEventListener('beforeprint',()=>chapters.forEach(c=>{c.dataset.wasOpen=String(c.open);c.dataset.wasHidden=String(c.hidden);c.hidden=false;c.open=true}));window.addEventListener('afterprint',()=>chapters.forEach(c=>{c.open=c.dataset.wasOpen==='true';c.hidden=c.dataset.wasHidden==='true'}));
+renderStep();
+</script>
+</body></html>
