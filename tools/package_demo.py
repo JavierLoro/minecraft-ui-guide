@@ -1,34 +1,28 @@
-"""Package the reusable demo with its built plugin, excluding all runtime/player data."""
+"""Package the vanilla datapack project; never include a server, plugin or world."""
 from pathlib import Path
 import hashlib,json,zipfile
 ROOT=Path(__file__).resolve().parents[1]
-DEMO=ROOT/'demo'
-OUT=ROOT/'downloads';OUT.mkdir(exist_ok=True)
-jar=DEMO/'build/libs/minecraft-ui-demo.jar'
-pack=DEMO/'build/pack/taller-pack.zip'
-assert jar.is_file() and pack.is_file(),'Compile demo first'
+DEMO=ROOT/'demo';OUT=ROOT/'downloads';OUT.mkdir(exist_ok=True)
 files=[]
-for directory in ['src','pack','tools','gradle']:
+for directory in ['datapack','pack','tools']:
     files.extend(p for p in (DEMO/directory).rglob('*') if p.is_file() and '__pycache__' not in p.parts)
-for name in ['settings.gradle.kts','build.gradle.kts','gradlew','gradlew.bat','versions.json','.gitignore','.gitattributes','README.md','AGENTS.md','CAPTURAS.md','LICENSE','NOTICE']:
+for name in ['versions.json','.gitignore','.gitattributes','README.md','AGENTS.md','CAPTURAS.md','LICENSE','NOTICE']:
     files.append(DEMO/name)
+def entry(z,name,data):
+    info=zipfile.ZipInfo(name,date_time=(2026,11,8,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED
+    info.external_attr=0o100644<<16;z.writestr(info,data)
 archive=OUT/'minecraft-ui-demo.zip'
 with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
-    for p in sorted(files):
-        name=p.relative_to(DEMO).as_posix()
-        info=zipfile.ZipInfo(name,date_time=(2026,11,8,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED
-        info.external_attr=(0o100755 if name=='gradlew' else 0o100644)<<16
-        z.writestr(info,p.read_bytes())
-    for p,name in [(jar,'dist/minecraft-ui-demo.jar'),(pack,'dist/taller-pack.zip')]:
-        info=zipfile.ZipInfo(name,date_time=(2026,11,8,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED
-        z.writestr(info,p.read_bytes())
-(OUT/'minecraft-ui-demo.jar').write_bytes(jar.read_bytes())
-(OUT/'taller-pack.zip').write_bytes(pack.read_bytes())
+    for p in sorted(files):entry(z,p.relative_to(DEMO).as_posix(),p.read_bytes())
+    for name in ['taller-datapack.zip','taller-resources.zip']:
+        p=DEMO/'build'/name;assert p.is_file();entry(z,'build/'+name,p.read_bytes())
+for name in ['taller-datapack.zip','taller-resources.zip']:(OUT/name).write_bytes((DEMO/'build'/name).read_bytes())
+for name in ['minecraft-ui-demo.jar','taller-pack.zip']:(OUT/name).unlink(missing_ok=True)
 manifest={p.name:{'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size}
-          for p in [archive,OUT/'minecraft-ui-demo.jar',OUT/'taller-pack.zip']}
+          for p in [archive,OUT/'taller-datapack.zip',OUT/'taller-resources.zip']}
 (OUT/'demo-checksums.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
 with zipfile.ZipFile(archive) as z:
     assert z.testzip() is None
-    assert not any(name.startswith(('run/','build/','.gradle/')) for name in z.namelist())
-    assert 'dist/minecraft-ui-demo.jar' in z.namelist() and 'gradle/wrapper/gradle-wrapper.jar' in z.namelist()
-print('Demo packaged:',archive.name,archive.stat().st_size,'bytes; no runtime profiles, world or logs.')
+    assert not any(n.startswith(('run/','run-vanilla/','.gradle/','gradle/','src/')) or n.endswith('.jar') for n in z.namelist())
+    assert 'datapack/pack.mcmeta' in z.namelist() and 'pack/pack.mcmeta' in z.namelist()
+print('Vanilla project packaged:',archive.stat().st_size,'bytes. No plugins, JARs, worlds or player data.')

@@ -1,89 +1,88 @@
-# Taller: demo de interfaces de Minecraft Java
+# Taller: demo de interfaces en Minecraft vanilla
 
-Proyecto base ejecutable para **Minecraft Java 26.3, Paper build 244 y JDK 25**. Incluye plugin, paquete de recursos propio, compilación con Gradle Wrapper, pruebas y un arranque local reproducible.
+Datapack y paquete de recursos para **Minecraft Java 26.3**. Los menús, las acciones, el progreso y las preferencias se ejecutan con funciones y comandos del juego. No utiliza Paper, plugins, mods ni compilación Java.
 
-[Descargar el proyecto con el plugin compilado](https://javierloro.github.io/minecraft-ui-guide/downloads/minecraft-ui-demo.zip) · [Guía de interfaces](https://javierloro.github.io/minecraft-ui-guide/)
+## Probar en un mundo individual
 
-## Probar sin compilar
+1. Descarga [el datapack](https://javierloro.github.io/minecraft-ui-guide/downloads/taller-datapack.zip) y [los recursos](https://javierloro.github.io/minecraft-ui-guide/downloads/taller-resources.zip).
+2. Al crear un mundo de Minecraft Java 26.3, añade el datapack en la pantalla de paquetes de datos. También puedes colocarlo en `datapacks/` de un mundo de pruebas y recargar ese mundo.
+3. Instala y activa el ZIP de recursos desde Opciones → Paquetes de recursos.
+4. Dentro del mundo, escribe `/trigger taller.open` o abre Taller desde los diálogos del menú de pausa.
 
-Necesitas Minecraft Java 26.3, Python 3.10+ y un JDK 25. Descarga el ZIP, extráelo y abre una terminal en la carpeta extraída.
+Un jugador normal puede usar los botones: solo ejecutan `/trigger`. La instalación y la recarga de un datapack en un servidor corresponden a su administrador.
+
+## Servidor vanilla local
+
+Necesitas Java 25 y Python 3.10+. Desde esta carpeta:
 
 ```sh
+python tools/build.py
 python tools/dev.py prepare
 ```
 
-Descarga la versión fija de Paper y comprueba su SHA-256. No incluye ni redistribuye el servidor de Minecraft. Antes de iniciar, lee la [EULA de Minecraft](https://www.minecraft.net/eula). Si la aceptas personalmente:
+El script descarga el servidor **oficial y sin modificar** desde Mojang y verifica su SHA-1. No se redistribuye el servidor. Tras leer y aceptar personalmente la [EULA de Minecraft](https://www.minecraft.net/eula):
 
 ```sh
 python tools/dev.py start --accept-eula
 ```
 
-El script usa `JAVA_HOME` o el Java de tu PATH y comprueba que sea Java 25. También puedes indicar `--java-home RUTA_A_TU_JDK_25`. Esa ruta pertenece a tu máquina y no debe guardarse en el repositorio.
+Usa `JAVA_HOME` o añade `--java-home RUTA_AL_JDK_25`. La partida escucha en `127.0.0.1:25585`; el lanzador sirve únicamente el ZIP de recursos en `127.0.0.1:8127/pack.zip`. Entra con Minecraft 26.3 y acepta el paquete requerido. Para detenerlo, escribe `stop` en su consola.
 
-En Minecraft 26.3, conéctate a **127.0.0.1:25585**, acepta el paquete de recursos de la demo y escribe **`/uidemo`**. El servidor y el servicio del paquete escuchan solo en tu propio equipo. Detén el servidor escribiendo `stop` en su consola.
+`run-vanilla/` es un mundo de desarrollo aislado. No se utilizan mundos existentes ni archivos de otras instancias.
 
-## Recorrido
+## Recorrido de la demo
 
-1. **Fabricar pieza:** aumenta el progreso del pedido de demostración.
-2. **Cobrar 25:** aparece al completarlo; un pedido no puede cobrarse dos veces.
-3. **Nuevo pedido:** conserva el saldo y reinicia el progreso.
-4. **Mostrar / ocultar HUD:** alterna su visibilidad y guarda la preferencia.
-5. **Ajustes:** cambia el nombre, el tamaño del pedido y la posición del HUD. Cambiar el tamaño empieza un pedido nuevo sin borrar el saldo.
-6. Sal y vuelve a entrar: el pedido, el saldo y las preferencias se conservan.
+- **Fabricar pieza:** añade una pieza al pedido.
+- **Cobrar 25:** solo aparece cuando está completo; cada pedido se cobra una vez.
+- **Nuevo pedido:** reinicia el progreso y conserva el saldo.
+- **Mostrar u ocultar HUD:** guarda la preferencia.
+- **Ajustes:** checkbox de visibilidad, selector de posición y deslizador de tamaño del pedido.
+- Sal y vuelve a entrar: los scoreboards del mundo conservan los datos de cada jugador.
 
-El saldo pertenece exclusivamente a esta demo. Fabricar no entrega objetos ni modifica inventarios o economías de otros plugins.
+El saldo pertenece a la demostración; no entrega objetos ni altera ninguna economía externa. El HUD incluye fuentes propias, avances negativos y seis estados de progreso. La posición centrada es la inicial; la esquina izquierda activa el shader específico de 26.3 y debe comprobarse visualmente en el cliente.
 
-El menú incorpora tooltips en sus botones. Los ajustes muestran los cuatro inputs nativos: texto, booleano, selección y rango. El HUD usa una bossbar, una fuente bitmap propia, avances negativos y sprites transparentes del color blanco.
+## Archivos que puedes reutilizar
 
-## HUD centrado y anclado
+| Parte | Archivo o carpeta |
+|---|---|
+| Entrada y ciclo por jugador | `datapack/data/taller/function/player/` |
+| Pantalla y tokens de botones | `datapack/data/taller/function/ui/` |
+| Validación de entradas | `datapack/data/taller/function/input/` |
+| Reglas del pedido y ajustes | `datapack/data/taller/function/logic/` |
+| Bossbar individual y composición | `datapack/data/taller/function/hud/` |
+| Formularios registrados | `datapack/data/taller/dialog/settings/` |
+| Fuentes, texturas y shader | `pack/assets/` |
+| Generación de formularios y ZIP | `tools/build.py` |
 
-La vista **centrada** es la inicial. Permite comprobar la composición gráfica sin depender de cambios de coordenadas. **Esquina izquierda** activa los marcadores del shader `text.vsh` específico de 26.3. También puedes usar `/uidemo nativo` y `/uidemo anclado`.
+Las acciones del menú llevan un número de sesión. El datapack compara esa sesión, limita la frecuencia y valida el estado antes de ejecutar la operación. Los formularios solo aceptan tamaños de 1 a 12 y banderas booleanas. Su mensaje numérico es `objetivo × 100 + visible × 10 + anclado`; no acepta comandos ni texto arbitrario del cliente.
 
-El contrato de esta demo reserva `#FA02F0` para blanco y `#FA02E0` para turquesa. No es el contrato RGB ilustrativo de la guía ni un estándar de Minecraft. El compositor completa exactamente 160 píxeles de avance; el shader parte de esa anchura y del origen de la bossbar. Cambiar fuentes, anchuras o versión requiere ajustar y volver a probar ese contrato.
+Cada jugador tiene un identificador y una bossbar propia. El almacenamiento `taller:ctx` es temporal y se usa secuencialmente; la persistencia está en los scoreboards. No reutilices ese almacenamiento desde tareas aplazadas como si perteneciese permanentemente a un jugador.
 
-La bossbar blanca se reserva para el HUD; el paquete también vuelve transparentes otras bossbars blancas de estilo continuo. El HUD es informativo: la interacción con cursor está en los diálogos.
+La demo no registra un manejador para `minecraft:custom`: esa acción no ejecuta funciones de datapack por sí sola. Utiliza los comandos `/trigger` que sí pueden usar jugadores sin OP.
 
-## Compilar y modificar
-
-```sh
-# Windows
-.\gradlew.bat clean build
-
-# Linux / macOS
-sh gradlew clean build
-```
-
-Los resultados son `build/libs/minecraft-ui-demo.jar` y `build/pack/taller-pack.zip`. El paquete queda además embebido en el plugin. Tras cambiar los gráficos procedurales:
+## Construir y comprobar
 
 ```sh
 python tools/make_assets.py
+python tools/build.py
 python tools/check_pack.py
 ```
 
-Vuelve a compilar y ejecuta `python tools/dev.py prepare` con el servidor detenido para copiar el nuevo plugin. El wrapper y su distribución llevan checksum fijo; las versiones están en `versions.json`.
+Para ejecutar las autopruebas en el servidor vanilla preparado, usa su consola:
 
-## Qué cambiar para tu proyecto
+```mcfunction
+function taller:test/run
+data get storage taller:test report
+```
 
-| Quieres cambiar | Empieza aquí |
-|---|---|
-| Pedidos, saldo y reglas | `src/main/java/io/github/javierloro/uidemo/WorkshopState.java` |
-| Pantallas, botones, tooltips e inputs | `DemoDialogs.java`, en ese mismo paquete |
-| Validación de sesiones y frecuencia | `SessionGate.java` |
-| Archivos de preferencias por jugador | `ProfileStore.java` |
-| Composición, avances y colores del HUD | `HudRenderer.java` |
-| Pack HTTP y ciclo de vida | `PackServer.java` y `UiDemoPlugin.java` |
-| Fuentes, texturas y shader | `pack/assets/` |
+El informe debe mostrar `errors: 0`. Estas pruebas ejecutan las funciones de pedidos y ajustes con perfiles ficticios propios de la prueba, no con datos de jugadores reales. Los comandos y JSON se validan además contra el parser y los codecs del JAR oficial de Minecraft 26.3 durante el desarrollo.
 
-Sustituye el namespace `taller`, el paquete Java, `plugin.yml` y los identificadores del pack al crear un proyecto independiente. Separa tus servicios de economía o juego del compositor y mantén la validación en el servidor. El [AGENTS.md](AGENTS.md) sirve de entrada para otro agente.
+La comprobación visual y las [capturas del cliente](CAPTURAS.md) son una etapa distinta. No afirmar que un shader se ve bien porque el datapack se haya cargado o las pruebas de comandos pasen.
 
-## Otro equipo o un servidor público
+## Alcance
 
-El arranque incluido está pensado para desarrollo local. Para otros jugadores, aloja `build/pack/taller-pack.zip` en una URL accesible y configura `resource-pack.public-url` en `run/plugins/MinecraftUiDemo/config.yml`. Ajusta por separado la interfaz de escucha y los accesos del servidor; no publiques la carpeta `run/`.
+Esta base implementa pedidos, botones, tooltips, tres controles, preferencias y HUD. Mascotas, transiciones complejas y un campo de nombre libre no están implementados. Un shader mueve el dibujo, no crea zonas clicables nuevas.
 
-## Verificación y capturas
+Los gráficos del paquete deben estar cargados; el datapack no detecta por sí solo el resultado de esa descarga. El arranque local los requiere. Los sprites transparentes afectan también a otras bossbars blancas de estilo continuo.
 
-La compilación ejecuta pruebas de pedidos, cobro idempotente, entradas inválidas, aislamiento por jugador, sesiones caducadas y clics repetidos. La comprobación dentro de Minecraft tiene su propio [recorrido de prueba y capturas](CAPTURAS.md).
-
-Los tests de Java no verifican el renderizado del shader ni la geometría de los controles del cliente. Las capturas de la guía deben proceder del cliente ejecutando esta demo. No sustituyas esa comprobación por imágenes generadas.
-
-Código propio y recursos `taller`: MIT. Atribuciones y archivos de terceros: [NOTICE](NOTICE).
+Cambia el namespace `taller`, los objetivos y el contrato de fuentes y shader al adaptarlo a otro proyecto. [Entrada para agentes](AGENTS.md), [guía divulgativa](https://javierloro.github.io/minecraft-ui-guide/) y [atribuciones](NOTICE).

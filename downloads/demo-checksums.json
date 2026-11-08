@@ -1,14 +1,14 @@
 {
   "minecraft-ui-demo.zip": {
-    "sha256": "0ee92e7aae94323d5b947d6a24777cd2e0a4869d46bff82ff331049d2169faa3",
-    "bytes": 118475
+    "sha256": "c7fa70a5108c392a566a64b4dda1868be15b677ffd06366bb777375c73a02729",
+    "bytes": 82920
   },
-  "minecraft-ui-demo.jar": {
-    "sha256": "aa40c3c154e2628d54bee21a182fbd0c0faf7986380efad72aad7f30031c1b24",
-    "bytes": 30816
+  "taller-datapack.zip": {
+    "sha256": "f2867af16f867c3f217f98cade16b2c777039a9c08cae08270ef5adb3b149ce1",
+    "bytes": 41275
   },
-  "taller-pack.zip": {
-    "sha256": "33d01ccea631c72985f3d0e6718cc86611c35a3346277fc95b8a419d2e6cbe43",
-    "bytes": 8246
+  "taller-resources.zip": {
+    "sha256": "ccd33241bd62fb4da86263464e35109bd8d28f90344c61728c7ca2edc7c3301f",
+    "bytes": 6551
   }
 }

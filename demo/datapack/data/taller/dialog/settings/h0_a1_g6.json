@@ -1,0 +1,58 @@
+{
+  "type": "minecraft:confirmation",
+  "title": "Ajustes del taller",
+  "pause": false,
+  "after_action": "wait_for_response",
+  "can_close_with_escape": true,
+  "inputs": [
+    {
+      "key": "hud",
+      "type": "minecraft:boolean",
+      "label": "Mostrar HUD",
+      "initial": false,
+      "on_true": "1",
+      "on_false": "0"
+    },
+    {
+      "key": "anchor",
+      "type": "minecraft:single_option",
+      "label": "Posición",
+      "options": [
+        {
+          "id": "0",
+          "display": "Centrado",
+          "initial": false
+        },
+        {
+          "id": "1",
+          "display": "Esquina izquierda",
+          "initial": true
+        }
+      ]
+    },
+    {
+      "key": "goal",
+      "type": "minecraft:number_range",
+      "label": "Piezas por pedido",
+      "start": 1,
+      "end": 12,
+      "step": 1,
+      "initial": 6
+    }
+  ],
+  "yes": {
+    "label": "Guardar",
+    "tooltip": "Guarda las preferencias; cambiar el tamaño reinicia el pedido.",
+    "action": {
+      "type": "minecraft:dynamic/run_command",
+      "template": "trigger taller.form set $(goal)$(hud)$(anchor)"
+    }
+  },
+  "no": {
+    "label": "Cancelar",
+    "action": {
+      "type": "minecraft:run_command",
+      "command": "trigger taller.open"
+    }
+  }
+}

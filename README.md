@@ -1,72 +1,16 @@
-# Interfaces y HUD en Minecraft Java
+# Cómo funcionan las interfaces en Minecraft
 
-Manual interactivo y documentación Markdown para construir menús, botones, toggles, tooltips, formularios, HUD y transiciones mediante funciones nativas y paquetes de recursos.
+Guía divulgativa para entender cómo se combinan las reglas de la partida, las funciones de Minecraft y un paquete de recursos para crear menús y HUD. La lectura principal explica la idea; los desplegables técnicos enlazan al código y a los archivos de una demo vanilla.
 
-## Demo reutilizable en Minecraft
+- [Leer la guía](https://javierloro.github.io/minecraft-ui-guide/).
+- [Demo Taller: datapack y recursos](demo/README.md).
+- [Descargar proyecto reutilizable](downloads/minecraft-ui-demo.zip).
+- [Manual técnico en Markdown](GUIA-INTERFACES-MINECRAFT.md).
+- [Entrada para agentes](AGENTS.md).
 
-La demo **Taller** incluye un plugin de Paper 26.3, un paquete de recursos propio, pruebas y scripts de arranque local. Tiene pedidos, botones y tooltips, cuatro tipos de controles, preferencias persistentes y un HUD por bossbar.
+## Editar la guía
 
-- [Proyecto e instrucciones](demo/README.md)
-- [ZIP con código y plugin compilado](downloads/minecraft-ui-demo.zip)
-- [Entrada para agentes](demo/AGENTS.md)
-
-La comprobación visual y las capturas se realizan dentro de Minecraft siguiendo [este recorrido](demo/CAPTURAS.md).
-
-## Publicar en GitHub Pages
-
-### Publicación automática desde PowerShell
-
-Con Git y GitHub CLI instalados, ejecutar desde esta carpeta:
-
-```powershell
-pwsh -NoProfile -File .\publicar.ps1
-```
-
-El script comprueba la cuenta `JavierLoro`, permite iniciar sesión, crea el repositorio público `minecraft-ui-guide`, sube los archivos y activa Pages desde `main`. Si necesitas otro propietario o nombre:
-
-```powershell
-pwsh -NoProfile -File .\publicar.ps1 -Owner TU_USUARIO -Repository NOMBRE_DEL_REPOSITORIO
-```
-
-Se detiene si la cuenta o el remoto local no coinciden; no sustituye repositorios ajenos. Si falla la activación de Pages tras la subida, se puede completar desde Settings.
-
-### Publicación desde la web
-
-1. Crear un repositorio en GitHub. Un repositorio público permite usar Pages con GitHub Free.
-2. Subir **el contenido de esta carpeta a la raíz del repositorio**. `index.html`, `AGENTS.md` y `.nojekyll` deben quedar en la raíz, no dentro de otra carpeta. No subir el ZIP como único archivo.
-3. En el repositorio, abrir **Settings → Pages**.
-4. Elegir **Deploy from a branch**, la rama **main** y la carpeta **/(root)**. Guardar.
-5. Esperar a que termine la publicación y abrir la dirección que muestre GitHub.
-
-La dirección de un repositorio normal será `https://TU_USUARIO.github.io/TU_REPOSITORIO/`. No es necesario editar el HTML para añadir ese prefijo: todos los enlaces locales son relativos.
-
-El sitio ya está generado: publicar no requiere Node, Python ni GitHub Actions personalizados. `.nojekyll` evita transformar los archivos Markdown y permite servirlos como archivos de lectura directa. Si la rama se llama de otra forma, seleccionarla en Pages.
-
-[Instrucciones oficiales de GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
-
-## Compartir con un agente
-
-Para una lectura rápida, proporcionar la URL de `AGENTS.md`:
-
-```text
-Lee https://TU_USUARIO.github.io/TU_REPOSITORIO/AGENTS.md.
-Después consulta los capítulos necesarios de la guía Markdown enlazada
-antes de implementar un sistema de interfaces para Minecraft Java.
-```
-
-| Archivo | Uso |
-|---|---|
-| `index.html` | Lectura visual, diagramas y simulaciones |
-| `AGENTS.md` | Contexto técnico breve y mapa de lectura |
-| `GUIA-INTERFACES-MINECRAFT.md` | Fuente completa en Markdown |
-| `llms.txt` | Índice de recursos de texto |
-| `llms-full.txt` | Guía completa en texto, generada desde el Markdown |
-
-`llms.txt` es una ayuda de descubrimiento, no un mecanismo que obligue a los agentes a leerlo. El acceso directo a `AGENTS.md` funciona sin ejecutar JavaScript.
-
-## Editar y regenerar
-
-Para leer y publicar los archivos no hay dependencias. Solo para regenerar el HTML tras cambios:
+El relato principal está en `source/template.html`. El manual técnico está en `GUIA-INTERFACES-MINECRAFT.md`. El generador crea `index.html` y sincroniza `llms-full.txt`:
 
 ```sh
 python -m pip install -r requirements.txt
@@ -74,16 +18,27 @@ python tools/build.py
 python tools/check.py
 ```
 
-Editar `GUIA-INTERFACES-MINECRAFT.md` y, si cambia la presentación, `source/template.html`. El generador actualiza `index.html` y `llms-full.txt`. Subir también estos archivos generados al repositorio para que Pages publique la versión actualizada.
-
-Para probar el sitio localmente:
+## Preparar la demo
 
 ```sh
-python -m http.server 8000
+python demo/tools/make_assets.py
+python demo/tools/build.py
+python demo/tools/check_pack.py
+python tools/package_demo.py
 ```
 
-Abrir `http://localhost:8000/`. También se puede abrir `index.html` directamente.
+La demo usa Minecraft Java 26.3 y sus mecanismos vanilla. No contiene plugins ni el servidor de Mojang. Ver [instrucciones y alcance](demo/README.md) antes de arrancarla.
 
-## Alcance
+## Publicar
 
-La guía contiene ejemplos y simulaciones didácticas. `demo/` añade un plugin ejecutable específico para Paper 26.3 y Java 25; `downloads/` contiene el proyecto empaquetado, el plugin y sus recursos. No se redistribuye el servidor de Minecraft: el arranque descarga y verifica Paper desde su origen oficial. El shader anclado requiere comprobación visual con el cliente objetivo.
+GitHub Pages sirve `main` desde la raíz. Mantener enlaces relativos, `.nojekyll`, los archivos generados y los descargables sincronizados. No publicar carpetas de ejecución, mundos o registros.
+
+Para repetir la validación de los comandos y codecs con el JAR oficial, sin iniciar el servidor:
+
+```sh
+python tools/validate_demo_native.py --java-home RUTA_AL_JDK_25
+```
+
+Este diagnóstico del repositorio utiliza un JDK; no forma parte de la lógica del juego ni del proyecto descargable.
+
+Las capturas deben proceder del cliente ejecutando la demo. No afirmar una prueba visual a partir de verificaciones de sintaxis.

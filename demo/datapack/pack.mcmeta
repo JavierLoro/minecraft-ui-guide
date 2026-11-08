@@ -1,0 +1,13 @@
+{
+  "pack": {
+    "description": "Taller: interfaces vanilla para Minecraft Java 26.3",
+    "min_format": [
+      121,
+      0
+    ],
+    "max_format": [
+      121,
+      0
+    ]
+  }
+}

@@ -1,15 +1,15 @@
-# Demo de interfaces de Minecraft Java
+# Demo vanilla de interfaces
 
-Proyecto base para Paper 26.3 build 244 y Java 25. Todo el contenido grafico de `pack/assets/taller/` es propio; el shader conserva la base de Minecraft 26.3.
+Minecraft Java 26.3. Solo datapack y recursos; no reintroducir plugins ni APIs de Paper.
 
-- `WorkshopState`: reglas puras de la demostracion y preferencias.
-- `SessionGate`: sesiones de pantalla por jugador; invalida acciones antiguas.
-- `ProfileStore`: persistencia local por UUID.
-- `DemoDialogs`: pantallas y formularios nativos de Paper.
-- `HudRenderer`: glifos, metricas y composicion de la bossbar.
-- `PackServer`: servicio HTTP local del paquete, sin acceso al resto del disco.
-- `UiDemoPlugin`: ciclo de vida, comandos y coordinacion.
+- Reglas: `datapack/data/taller/function/logic/`.
+- Entrada: `/trigger taller.open` y `dialog/open.json`.
+- Sesiones y validación: `function/ui/` y `function/input/`.
+- HUD por jugador: `function/hud/` y `pack/assets/taller/`.
+- Persistencia: objetivos `taller.*`; almacenamiento `taller:ctx` solo temporal y secuencial.
+- `tools/build.py` genera los 48 formularios y los ZIP. `tools/make_assets.py` genera los gráficos propios.
+- `function taller:test/run` ejecuta las reglas reales; consultar `storage taller:test report`.
 
-Ejecutar `python tools/make_assets.py` tras modificar el generador. Compilar y probar con `./gradlew clean build` (Windows: `gradlew.bat clean build`), usando Java 25.
+Los números de sesión limitan el uso de botones antiguos; los permisos de administrador siguen siendo de confianza. El formulario solo transporta un entero acotado mediante `/trigger`. No prometer una ejecución de `minecraft:custom` en vanilla.
 
-No publicar `run/`, perfiles, logs, UUID de jugadores ni datos de autenticacion. Los comandos actuan solo sobre el estado de demo del jugador; no modifican su inventario ni su economia real. Las capturas documentales deben proceder de Minecraft ejecutando esta demo, nunca de imagenes generadas.
+No publicar `run/`, `run-vanilla/`, mundos, perfiles, registros ni el JAR de Mojang. Las capturas deben proceder de esta demo ejecutada dentro de Minecraft. Los checks de sintaxis no equivalen a una prueba visual.

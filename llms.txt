@@ -1,29 +1,10 @@
-# Interfaces y HUD de Minecraft Java
+# Interfaces de Minecraft: guía y demo vanilla
 
-> Guía independiente para construir menús interactivos y HUD mediante funciones nativas, plugins y paquetes de recursos.
+La web explica la idea para cualquier lector. Los desplegables amplían cada concepto y enlazan a los archivos reales de la demo.
 
-## Entrada rápida
-
-- [AGENTS.md](AGENTS.md): arquitectura resumida, mecanismos, flujo de un toggle, límites y rutas de lectura.
-- [Guía completa en Markdown](GUIA-INTERFACES-MINECRAFT.md): 29 capítulos de implementación.
-- [Texto completo](llms-full.txt): la misma guía completa como archivo de texto.
-
-## Lectura visual
-
-- [Manual interactivo](index.html): esquemas, simulaciones y guía integrada; la lógica de las demostraciones es HTML/JavaScript, no un servidor Minecraft.
-
-## Fuentes de plataforma
-
-- [Diálogos de Minecraft Java](https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21-6)
-- [API de diálogos de Paper](https://docs.papermc.io/paper/dev/dialogs/)
-- [Adventure](https://docs.papermc.io/adventure/)
-
-## Alcance
-
-Los ejemplos no forman un plugin listo para instalar. La codificación RGB, los nombres de acciones y los glifos son decisiones de la aplicación. Adaptar y verificar las APIs y shaders en la versión exacta del proyecto.
-
-## Demo reutilizable
-
-- [Proyecto Paper ejecutable](demo/README.md): arranque, recorrido y adaptación.
-- [Arquitectura de la demo](demo/AGENTS.md): mapa del código para agentes.
-- [Pruebas en Minecraft y capturas](demo/CAPTURAS.md): comprobaciones que requieren el cliente.
+- [Entrada para agentes](AGENTS.md)
+- [Manual técnico](GUIA-INTERFACES-MINECRAFT.md)
+- [Texto completo del manual](llms-full.txt)
+- [Demo vanilla](demo/README.md)
+- [Mapa de la demo](demo/AGENTS.md)
+- [Capturas y prueba en cliente](demo/CAPTURAS.md)

@@ -1,4 +1,5 @@
-.gradle/
 build/
 run/
+run-vanilla/
+.gradle/
 __pycache__/

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:notice",
+  "title": "Taller",
+  "external_title": "Taller",
+  "pause": false,
+  "body": [
+    {
+      "type": "minecraft:plain_message",
+      "contents": "Pedidos, ajustes y HUD con funciones de Minecraft vanilla."
+    }
+  ],
+  "action": {
+    "label": "Abrir taller",
+    "action": {
+      "type": "minecraft:run_command",
+      "command": "trigger taller.open"
+    }
+  }
+}
